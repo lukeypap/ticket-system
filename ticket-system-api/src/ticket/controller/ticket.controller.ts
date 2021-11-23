@@ -21,8 +21,8 @@ export class TicketController {
     return this._ticketService.create(user);
   }
 
-  @Delete()
-  delete() {
-    return 'Deleted user';
+  @Delete(':id')
+  delete(@Param() id: number) {
+    return this._ticketService.delete(id);
   }
 }

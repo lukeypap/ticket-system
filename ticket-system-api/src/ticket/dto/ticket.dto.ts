@@ -1,4 +1,4 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsDate, IsNumber, IsString } from 'class-validator';
 
 export class TicketDto {
   @IsNumber()
@@ -9,4 +9,7 @@ export class TicketDto {
 
   @IsString()
   message: string;
+
+  @IsDate()
+  createdAt: Date;
 }

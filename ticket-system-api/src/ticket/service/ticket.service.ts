@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { TicketDto } from 'src/ticket/dto/ticket.dto';
 import { Repository } from 'typeorm';
 import { TicketEntity } from '../entity/ticket.entity';
@@ -19,7 +18,13 @@ export class TicketService {
     return this.ticketRepo.find();
   }
 
-  findOne(id: number) {
-    return id;
+  findOne(id: number): Promise<TicketDto> {
+    return this.ticketRepo.findOne(id);
+  }
+
+  async delete(id: number): Promise<TicketDto> {
+    const ticket = await this.ticketRepo.findOne(id);
+    await this.ticketRepo.delete(id);
+    return ticket;
   }
 }
