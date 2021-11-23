@@ -1,13 +1,13 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('users')
-export class UserEntity {
+@Entity('tickets')
+export class TicketEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ nullable: false })
-  firstName: string;
+  title: string;
 
-  @Column({ name: 'last_name', nullable: false })
-  lastName: string;
+  @Column({ nullable: false })
+  message: string;
 }
