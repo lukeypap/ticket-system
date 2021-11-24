@@ -1,3 +1,4 @@
+import { isPhoneNumber } from 'class-validator';
 import {
   Column,
   CreateDateColumn,
@@ -11,14 +12,20 @@ export class TicketEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
+  @Column()
   title: string;
 
-  @Column({ nullable: false })
+  @Column()
   user: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   message: string;
+
+  @Column({ default: 'open' })
+  status: string;
+
+  @Column({ default: true })
+  isOpen: boolean;
 
   @CreateDateColumn({
     type: 'timestamptz',

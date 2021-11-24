@@ -1,4 +1,4 @@
-import { IsDate, IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsDate, IsNumber, IsString } from 'class-validator';
 
 export class TicketDto {
   @IsNumber()
@@ -10,6 +10,9 @@ export class TicketDto {
   @IsString()
   message: string;
 
-  @IsDate()
-  createdAt: Date;
+  @IsString()
+  status: string;
+
+  @IsBoolean()
+  isOpen: boolean;
 }

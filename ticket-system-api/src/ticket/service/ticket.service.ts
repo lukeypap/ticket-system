@@ -22,6 +22,11 @@ export class TicketService {
     return this.ticketRepo.findOne(id);
   }
 
+  async update(id: number, ticket: TicketDto): Promise<TicketDto> {
+    await this.ticketRepo.update(id, ticket);
+    return this.ticketRepo.findOne(id);
+  }
+
   async delete(id: number): Promise<TicketDto> {
     const ticket = await this.ticketRepo.findOne(id);
     await this.ticketRepo.delete(id);

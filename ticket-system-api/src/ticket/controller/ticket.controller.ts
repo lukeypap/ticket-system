@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { TicketDto } from '../dto/ticket.dto';
 import { TicketService } from '../service/ticket.service';
 
@@ -19,6 +27,11 @@ export class TicketController {
   @Post()
   create(@Body() user: TicketDto): Promise<TicketDto> {
     return this._ticketService.create(user);
+  }
+
+  @Put(':id')
+  update(@Param() id: number, @Body() ticket: TicketDto): Promise<TicketDto> {
+    return this._ticketService.update(id, ticket);
   }
 
   @Delete(':id')
