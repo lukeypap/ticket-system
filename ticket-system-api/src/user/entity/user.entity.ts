@@ -5,9 +5,18 @@ export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
+  @Column()
   firstName: string;
 
-  @Column({ name: 'last_name', nullable: false })
+  @Column()
   lastName: string;
+
+  @Column({ unique: true })
+  email: string;
+
+  @Column({ nullable: true })
+  department: string;
+
+  @Column({ nullable: true })
+  mobile: string;
 }
