@@ -1,5 +1,3 @@
-import { TicketEntity } from 'src/ticket/entity/ticket.entity';
-import { UserEntity } from 'src/user/entity/user.entity';
 import { createConnection } from 'typeorm';
 
 export const databaseProvider = [
@@ -8,12 +6,12 @@ export const databaseProvider = [
     useFactory: async () =>
       await createConnection({
         type: 'postgres',
-        host: 'localhost',
-        port: 5432,
-        username: 'postgres',
-        password: 'postgres',
-        database: 'ticket_system_db',
-        entities: [TicketEntity, UserEntity],
+        host: process.env.DB_HOST,
+        port: parseInt(process.env.DB_PORT),
+        username: process.env.DB_USER,
+        password: process.env.DB_PASS,
+        database: process.env.DB_NAME,
+        entities: [process.env.ENTITY_PATH],
         synchronize: true,
       }),
   },

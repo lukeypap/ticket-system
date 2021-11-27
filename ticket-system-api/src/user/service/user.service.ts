@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { plainToClass } from 'class-transformer';
 import { UserDto as User } from 'src/user/dto/user.dto';
 import { Repository } from 'typeorm';
 import { UserEntity } from '../entity/user.entity';
@@ -18,8 +19,9 @@ export class UserService {
     return this._userRepo.find();
   }
 
-  findOne(id: number): Promise<User> {
-    return this._userRepo.findOne(id);
+  async findOne(id: number): Promise<User> {
+    const userDto = plainToClass(User, await this._userRepo.findOne(id));
+    return userDto;
   }
 
   async update(user: User, id: number): Promise<User> {
