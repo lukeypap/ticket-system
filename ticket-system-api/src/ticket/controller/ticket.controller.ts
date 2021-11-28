@@ -8,6 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { TicketDto } from '../dto/ticket.dto';
+import { UpdateTicketDto } from '../dto/update-ticket.dto';
 import { TicketService } from '../service/ticket.service';
 
 @Controller('ticket')
@@ -20,8 +21,14 @@ export class TicketController {
   }
 
   @Get(':id')
-  findOne(@Param() id: number) {
+  findOne(@Param() id: number): Promise<TicketDto> {
     return this._ticketService.findOne(id);
+  }
+
+  @Get('status/:status')
+  findOpen(@Param('status') status: string) {
+    if (status === 'open') return this._ticketService.findOpen();
+    else if (status === 'closed') return this._ticketService.findClosed();
   }
 
   @Post()
@@ -30,12 +37,15 @@ export class TicketController {
   }
 
   @Put(':id')
-  update(@Param() id: number, @Body() ticket: TicketDto): Promise<TicketDto> {
+  update(
+    @Param() id: number,
+    @Body() ticket: UpdateTicketDto,
+  ): Promise<TicketDto> {
     return this._ticketService.update(id, ticket);
   }
 
   @Delete(':id')
-  delete(@Param() id: number) {
+  delete(@Param() id: number): Promise<TicketDto> {
     return this._ticketService.delete(id);
   }
 }

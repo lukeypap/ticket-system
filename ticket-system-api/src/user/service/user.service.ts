@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { plainToClass } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 import { UserDto as User } from 'src/user/dto/user.dto';
 import { Repository } from 'typeorm';
 import { UserEntity } from '../entity/user.entity';
@@ -11,27 +11,30 @@ export class UserService {
     private readonly _userRepo: Repository<UserEntity>,
   ) {}
 
-  create(user: User): Promise<User> {
-    return this._userRepo.save(user);
+  async create(user: User): Promise<User> {
+    const userDto = plainToInstance(User, await this._userRepo.save(user));
+    return userDto;
   }
 
-  findAll(): Promise<User[]> {
-    return this._userRepo.find();
+  async findAll(): Promise<User[]> {
+    const userDto = plainToInstance(User, await this._userRepo.find());
+    return userDto;
   }
 
   async findOne(id: number): Promise<User> {
-    const userDto = plainToClass(User, await this._userRepo.findOne(id));
+    const userDto = plainToInstance(User, await this._userRepo.findOne(id));
     return userDto;
   }
 
   async update(user: User, id: number): Promise<User> {
     await this._userRepo.update(id, user);
-    return this._userRepo.findOne(id);
+    const userDto = plainToInstance(User, this._userRepo.findOne(id));
+    return userDto;
   }
 
   async delete(id: number): Promise<User> {
-    const user = await this._userRepo.findOne(id);
     this._userRepo.delete(id);
-    return user;
+    const userDto = plainToInstance(User, await this._userRepo.findOne(id));
+    return userDto;
   }
 }

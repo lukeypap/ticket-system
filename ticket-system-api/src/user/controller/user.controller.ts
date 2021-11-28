@@ -13,7 +13,7 @@ import { UserDto } from '../dto/user.dto';
 import { UserService } from '../service/user.service';
 
 @Controller('user')
-@UseInterceptors(ClassSerializerInterceptor)
+//@UseInterceptors(ClassSerializerInterceptor)
 export class UserController {
   constructor(private readonly _userService: UserService) {}
 

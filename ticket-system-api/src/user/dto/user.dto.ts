@@ -3,11 +3,15 @@ import {
   IsDate,
   IsEmail,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
 } from 'class-validator';
 
 export class UserDto {
+  @IsNumber()
+  id: number;
+
   @IsString()
   @IsNotEmpty()
   firstName: string;
