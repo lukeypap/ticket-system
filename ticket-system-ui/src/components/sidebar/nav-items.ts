@@ -4,6 +4,7 @@ import { GiBackwardTime } from "react-icons/gi";
 import { IoIosSettings } from "react-icons/io";
 import { BsBoxArrowLeft } from "react-icons/bs";
 import { NavItem } from "../../types/nav-item";
+import { IoTicketSharp } from "react-icons/io5";
 
 export const navItems: NavItem[] = [
     {
@@ -20,25 +21,31 @@ export const navItems: NavItem[] = [
     },
     {
         type: "link",
-        href: "/discover",
-        icon: FaCompass,
-        label: "Discover",
-    },
-    {
-        type: "link",
-        href: "/clips",
-        icon: FaMusic,
-        label: "Clips",
-    },
-    {
-        type: "link",
         href: "/producers",
         icon: FaUserAlt,
-        label: "Producers",
+        label: "Users",
     },
     {
         type: "header",
-        label: "Library",
+        label: "Queues",
+    },
+    {
+        type: "link",
+        href: "/local",
+        icon: IoTicketSharp,
+        label: "Open",
+    },
+    {
+        type: "link",
+        href: "/local",
+        icon: IoTicketSharp,
+        label: "Closed",
+    },
+    {
+        type: "link",
+        href: "/local",
+        icon: IoTicketSharp,
+        label: "Work in progress",
     },
     {
         type: "link",
@@ -51,12 +58,6 @@ export const navItems: NavItem[] = [
         href: "/favorites",
         icon: FaHeart,
         label: "Favorites",
-    },
-    {
-        type: "link",
-        href: "/local",
-        icon: FaDatabase,
-        label: "Local",
     },
     {
         type: "header",

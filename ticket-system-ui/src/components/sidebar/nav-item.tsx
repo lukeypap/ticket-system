@@ -1,16 +1,16 @@
-import React from "react";
 import NextLink from "next/link";
-import { NavItem as Item } from "types/nav-item";
-import { Box, Heading, HStack, Link, Text } from "@chakra-ui/layout";
-import Icon from "@chakra-ui/icon";
+import { Heading, Icon, Text, HStack, Box, Link } from "@chakra-ui/react";
 
-interface Props {
+import { NavItem as Item } from "types/nav-item";
+
+type Props = {
     item: Item;
     isActive: boolean;
-}
+};
 
-const NavItem = ({ isActive, item }: Props) => {
+export const NavItem = ({ isActive, item }: Props) => {
     const { label } = item;
+
     if (item.type === "link") {
         const { icon } = item;
 
@@ -27,24 +27,16 @@ const NavItem = ({ isActive, item }: Props) => {
                         _hover={{
                             background: "gray.dark",
                         }}
+                        ms={0}
+                        borderRight={isActive ? "4px" : "0px"}
+                        borderRightColor={isActive ? "brand.red" : ""}
+                        //bg={isActive ? "brand.red" : ""}
+                        color={isActive ? "brand.red" : ""}
                     >
-                        <Icon
-                            width={5}
-                            height={5}
-                            mr={4}
-                            ml={8}
-                            color={isActive ? "brand.red" : "gray.light"}
-                        />
-                        <Text
-                            fontSize="md"
-                            fontWeight="medium"
-                            flex={1}
-                            letterSpacing="wider"
-                            color={isActive ? "brand.red" : "whiteAlpha.900"}
-                        >
+                        <Icon width={5} height={5} mr={4} ml={8} as={icon} />
+                        <Text fontSize="md" flex={1} letterSpacing="wider">
                             {label}
                         </Text>
-                        {isActive && <Box width={1} height={6} bg="brand.red" />}
                     </HStack>
                 </Link>
             </NextLink>
@@ -57,8 +49,8 @@ const NavItem = ({ isActive, item }: Props) => {
             fontWeight="normal"
             textTransform="uppercase"
             letterSpacing={6}
-            fontSize={6}
-            ml={6}
+            fontSize="sm"
+            ml={8}
             mt={{ base: 6, "2xl": 8 }}
             mb={2}
         >
@@ -66,5 +58,3 @@ const NavItem = ({ isActive, item }: Props) => {
         </Heading>
     );
 };
-
-export default NavItem;
