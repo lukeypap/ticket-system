@@ -18,8 +18,8 @@ import { formatDate } from "../../utils/formatDate";
 
 interface Props {
     tickets: ITicket[];
-    handleDelete: (id) => {};
-    handleCheck: (id) => {};
+    handleDelete: (id) => void;
+    handleCheck: (id) => void;
     onOpen: () => void;
     setModalId: (id) => void;
 }

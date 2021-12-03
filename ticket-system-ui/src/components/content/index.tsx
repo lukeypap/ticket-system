@@ -38,17 +38,14 @@ export const Content = () => {
         const ticket = deleteById(modalId);
         const newTickets = tickets.filter((ticket) => ticket.id !== modalId);
         setTickets(newTickets);
-        return ticket;
     };
 
     const handleCreate = async (values: Object) => {
         const ticket = await create(values);
-        //tickets.unshift(await ticket);
         const newTickets = tickets;
         newTickets.push(ticket);
         setTickets(newTickets);
         setLastCreatedTicket(ticket);
-        return ticket;
     };
 
     const handleCheck = async (id: number) => {
@@ -56,7 +53,6 @@ export const Content = () => {
         const newTickets = tickets.filter((ticket) => ticket.id !== id);
         newTickets.push(ticket);
         setTickets(newTickets);
-        return ticket;
     };
 
     return (
