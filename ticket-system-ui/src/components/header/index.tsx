@@ -5,9 +5,11 @@ import { BsTrash } from "react-icons/bs";
 import { FaEdit } from "react-icons/fa";
 import { IoTicket } from "react-icons/io5";
 
-interface Props {}
+interface Props {
+    onOpen: () => void;
+}
 
-export const PageHeader = (props: Props) => {
+export const PageHeader = ({ onOpen }: Props) => {
     return (
         <HStack width="full" pl={10} pr={10}>
             <Flex justifyContent="space-between" alignItems="center" flex={1}>
@@ -30,6 +32,7 @@ export const PageHeader = (props: Props) => {
                         colorScheme="blue"
                         fontWeight="md"
                         leftIcon={<IoTicket />}
+                        onClick={onOpen}
                     >
                         Create
                     </Button>

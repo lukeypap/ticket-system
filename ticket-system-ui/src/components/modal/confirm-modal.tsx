@@ -7,7 +7,6 @@ import {
     ModalBody,
     ModalFooter,
     Button,
-    useDisclosure,
     VStack,
     Text,
     Icon,
@@ -25,7 +24,6 @@ interface Props {
 }
 
 export const ConfirmModal = ({ message, title, onSubmit, isOpen, onClose, icon }: Props) => {
-    const { onOpen } = useDisclosure();
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />

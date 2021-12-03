@@ -23,3 +23,14 @@ export async function updateStatus(id: number, status: string) {
     }).then((res) => res.json());
     return ticket;
 }
+
+export async function create(values: Object) {
+    const ticket = await fetch(`${URL}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+    }).then((res) => res.json());
+    return ticket;
+}
