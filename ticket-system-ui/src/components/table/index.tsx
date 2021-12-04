@@ -15,11 +15,14 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { ITicket } from "../../types/ITicket";
 import { BsCheckLg } from "react-icons/bs";
 import { formatDate } from "../../utils/formatDate";
+import { IoChevronDown } from "react-icons/io5";
+import { Dropdown } from "../dropdown";
+import Link from "next/dist/client/link";
 
 interface Props {
     tickets: ITicket[];
     handleDelete: (id) => void;
-    handleCheck: (id) => void;
+    handleStatus: (id, status) => void;
     onOpen: () => void;
     setModalId: (id) => void;
 }
@@ -36,7 +39,7 @@ const chooseLabelColor = (ticket) => {
     }
 };
 
-export const MyTable = ({ tickets, handleCheck, onOpen, setModalId }: Props) => {
+export const MyTable = ({ tickets, handleStatus, onOpen, setModalId }: Props) => {
     return (
         <>
             <Table variant="simple">
@@ -55,64 +58,71 @@ export const MyTable = ({ tickets, handleCheck, onOpen, setModalId }: Props) => 
                     {tickets &&
                         tickets.map((ticket) => {
                             return (
-                                <Tr
-                                    onClick={() => {
-                                        console.log(ticket.id);
-                                    }}
-                                >
-                                    <Td>{ticket.id}</Td>
-                                    <Td>{ticket.title}</Td>
-                                    <Td>
-                                        <Button
+                                <Link href="about">
+                                    <Tr
+                                        onClick={() => {
+                                            console.log(ticket.id);
+                                        }}
+                                    >
+                                        <Td>{ticket.id}</Td>
+                                        <Td>{ticket.title}</Td>
+                                        <Td>
+                                            <Dropdown
+                                                color={chooseLabelColor(ticket)}
+                                                ticket={ticket}
+                                                handleStatus={handleStatus}
+                                            />
+                                            {/* <Button
                                             colorScheme={chooseLabelColor(ticket)}
                                             size="sm"
                                             textTransform="uppercase"
                                             fontSize="xs"
+                                            rightIcon={<IoChevronDown />}
                                             _focus={{}}
                                             _active={{}}
-                                            _hover={{ cursor: "default" }}
                                         >
                                             {ticket.status}
-                                        </Button>
-                                    </Td>
-                                    <Td>{ticket.user}</Td>
-                                    <Td>{formatDate(ticket.updatedAt)}</Td>
-                                    <Td>
-                                        <Flex justifyContent="center">
-                                            <Button
-                                                size="xs"
-                                                mx={1}
-                                                colorScheme="yellow"
-                                                variant="ghost"
-                                            >
-                                                <FaEdit />
-                                            </Button>
-                                            <Button
-                                                size="xs"
-                                                mx={1}
-                                                colorScheme="red"
-                                                variant="ghost"
-                                                onClick={() => {
-                                                    onOpen();
-                                                    setModalId(ticket.id);
-                                                }}
-                                            >
-                                                <FaTrash />
-                                            </Button>
-                                            <Button
-                                                size="xs"
-                                                mx={1}
-                                                colorScheme="green"
-                                                variant="ghost"
-                                                onClick={() => handleCheck(ticket.id)}
-                                                aria-label="Done"
-                                                isDisabled={ticket.status === "done"}
-                                            >
-                                                <BsCheckLg />
-                                            </Button>
-                                        </Flex>
-                                    </Td>
-                                </Tr>
+                                        </Button> */}
+                                        </Td>
+                                        <Td>{ticket.user}</Td>
+                                        <Td>{formatDate(ticket.updatedAt)}</Td>
+                                        <Td>
+                                            <Flex justifyContent="center">
+                                                <Button
+                                                    size="xs"
+                                                    mx={1}
+                                                    colorScheme="yellow"
+                                                    variant="ghost"
+                                                >
+                                                    <FaEdit />
+                                                </Button>
+                                                <Button
+                                                    size="xs"
+                                                    mx={1}
+                                                    colorScheme="red"
+                                                    variant="ghost"
+                                                    onClick={() => {
+                                                        onOpen();
+                                                        setModalId(ticket.id);
+                                                    }}
+                                                >
+                                                    <FaTrash />
+                                                </Button>
+                                                <Button
+                                                    size="xs"
+                                                    mx={1}
+                                                    colorScheme="green"
+                                                    variant="ghost"
+                                                    onClick={() => handleStatus(ticket.id, "done")}
+                                                    aria-label="Done"
+                                                    isDisabled={ticket.status === "done"}
+                                                >
+                                                    <BsCheckLg />
+                                                </Button>
+                                            </Flex>
+                                        </Td>
+                                    </Tr>
+                                </Link>
                             );
                         })}
                 </Tbody>

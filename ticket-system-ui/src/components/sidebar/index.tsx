@@ -1,17 +1,17 @@
-import { List, ListItem, VStack } from "@chakra-ui/react";
-
+import { List, ListItem, VStack, useColorMode } from "@chakra-ui/react";
 import { navItems } from "./nav-items";
 import { NavItem } from "./nav-item";
 import { Logo } from "../logo";
 
 export const Sidebar = () => {
+    const { colorMode, toggleColorMode } = useColorMode();
     return (
         <VStack
             alignItems="flex-start"
             width="full"
             height="full"
-            maxW={{ base: 56, "2xl": 72 }}
-            borderRightColor="gray.300"
+            maxW={{ base: 52, "2xl": 72 }}
+            borderRightColor={colorMode === "light" ? "gray.200" : "gray.600"}
             borderRightWidth={2}
             flexShrink={0}
         >

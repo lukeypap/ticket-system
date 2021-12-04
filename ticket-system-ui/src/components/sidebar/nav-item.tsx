@@ -34,7 +34,7 @@ export const NavItem = ({ isActive, item }: Props) => {
                         color={isActive ? "brand.red" : ""}
                     >
                         <Icon width={5} height={5} mr={4} ml={8} as={icon} />
-                        <Text fontSize="md" flex={1} letterSpacing="wider">
+                        <Text fontSize="sm" fontWeight="light" flex={1} letterSpacing="wider">
                             {label}
                         </Text>
                     </HStack>

@@ -95,6 +95,7 @@ export const FormModal = ({ message, title, handleCreate, isOpen, onClose, icon 
                         onClick={() => {
                             handleCreate(values);
                             onClose();
+                            setValues(initialValues);
                         }}
                     >
                         Submit

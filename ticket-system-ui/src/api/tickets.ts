@@ -12,7 +12,7 @@ export async function deleteById(id: number) {
 
 export async function updateStatus(id: number, status: string) {
     const body = {
-        status: "done",
+        status: status,
     };
     const ticket = await fetch(`${URL}/${id}`, {
         method: "PUT",
