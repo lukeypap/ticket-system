@@ -5,6 +5,7 @@ export interface ITicket {
     message: string;
     status: string;
     isOpen: boolean;
+    comments: [];
     createdAt: string;
     updatedAt: string;
 }

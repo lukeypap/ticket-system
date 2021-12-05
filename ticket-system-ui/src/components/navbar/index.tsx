@@ -30,8 +30,6 @@ export const Navbar = (props: Props) => {
 
     return (
         <Flex
-            //ml={{ base: 0, md: 60 }}
-            //px={{ base: 4, md: 4 }}
             ms={0}
             width="full"
             height="20"
@@ -39,6 +37,7 @@ export const Navbar = (props: Props) => {
             boxShadow="lg"
             justifyContent={{ base: "space-between" }}
             pr={5}
+            pb={0}
         >
             <Flex justifyContent="flex-start" alignItems="left" pl={8}>
                 <InputGroup>

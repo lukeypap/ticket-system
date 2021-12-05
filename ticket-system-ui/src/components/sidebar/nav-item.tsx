@@ -15,7 +15,7 @@ export const NavItem = ({ isActive, item }: Props) => {
         const { icon } = item;
 
         return (
-            <NextLink href="#" passHref>
+            <NextLink href="/" passHref>
                 <Link variant="unstyled" _hover={{ textDecoration: "none" }}>
                     <HStack
                         align="center"
@@ -25,7 +25,7 @@ export const NavItem = ({ isActive, item }: Props) => {
                         transitionProperty="background"
                         transitionDuration="normal"
                         _hover={{
-                            background: "gray.dark",
+                            color: "brand.red",
                         }}
                         ms={0}
                         borderRight={isActive ? "4px" : "0px"}

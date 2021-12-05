@@ -1,4 +1,4 @@
-import { Avatar } from "@chakra-ui/avatar";
+import Link from "next/link";
 import { Flex, Box, Badge, Text, HStack, Button, useColorMode } from "@chakra-ui/react";
 import React from "react";
 import { BsCheckLg } from "react-icons/bs";
@@ -32,8 +32,9 @@ export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModa
         <Flex
             boxShadow="md"
             p={3}
+            py={4}
             bg={colorMode === "light" ? "gray.50" : "gray.700"}
-            borderRadius="lg"
+            borderRadius="md"
             w="full"
             borderLeft="8px"
             opacity="0.8"
@@ -69,7 +70,7 @@ export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModa
                         {ticket.message ? ticket.message : "Empty description..."}
                     </Text>
                 </Box>
-                <Box w="100px">
+                <Box w="140px">
                     <Text>{ticket.user}</Text>
                     <Text
                         fontWeight="light"
@@ -89,8 +90,8 @@ export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModa
                         handleStatus={handleStatus}
                     />
                 </Box>
-                <Box w="120px" fontSize="xs">
-                    <Text>{formatDate(ticket.updatedAt)}</Text>
+                <Box w="130px" fontSize="xs">
+                    <Text>{formatDate(ticket.createdAt)}</Text>
                 </Box>
                 <Box>
                     <Flex justifyContent="center" alignItems="center">
@@ -120,20 +121,27 @@ export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModa
                         >
                             <BsCheckLg />
                         </Button>
-                        <Button
-                            alignItems="center"
-                            fontSize="0.7rem"
-                            mx={4}
-                            textTransform="uppercase"
-                            colorScheme="blue"
-                            color="blue.500"
-                            variant="ghost"
-                            letterSpacing={1}
-                            aria-label="Done"
-                            size="sm"
+                        <Link
+                            href={{
+                                pathname: "/ticket/[id]",
+                                query: { id: ticket.id },
+                            }}
                         >
-                            details
-                        </Button>
+                            <Button
+                                alignItems="center"
+                                fontSize="0.7rem"
+                                mx={4}
+                                textTransform="uppercase"
+                                colorScheme="blue"
+                                color="blue.500"
+                                variant="ghost"
+                                letterSpacing={1}
+                                aria-label="Done"
+                                size="sm"
+                            >
+                                details
+                            </Button>
+                        </Link>
                     </Flex>
                 </Box>
             </HStack>

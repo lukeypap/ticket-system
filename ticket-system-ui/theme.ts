@@ -14,8 +14,8 @@ export const theme = extendTheme(
             "brand.red": "#90CDF4",
         },
         fonts: {
-            heading: `Circular Std Bold, ${base.fonts?.heading}`,
-            body: `Circular Std Book, ${base.fonts?.body}`,
+            heading: "Ubuntu",
+            body: "Ubuntu",
         },
     },
     withDefaultVariant({

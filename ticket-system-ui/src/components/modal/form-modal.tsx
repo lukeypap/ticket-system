@@ -11,6 +11,7 @@ import {
     ModalFooter,
     Button,
     Textarea,
+    Select,
 } from "@chakra-ui/react";
 import React, { ReactElement, useRef, useState } from "react";
 
@@ -27,6 +28,7 @@ const initialValues = {
     title: "",
     user: "",
     message: "",
+    priority: "low",
 };
 
 export const FormModal = ({ message, title, handleCreate, isOpen, onClose, icon }: Props) => {
@@ -83,6 +85,19 @@ export const FormModal = ({ message, title, handleCreate, isOpen, onClose, icon 
                             placeholder="Write a short description of your issue..."
                             onChange={handleInputChange}
                         />
+                    </FormControl>
+
+                    <FormControl mt={4}>
+                        <FormLabel>Priority</FormLabel>
+                        <Select
+                            name="priority"
+                            onChange={handleInputChange}
+                            value={values.priority}
+                        >
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </Select>
                     </FormControl>
                 </ModalBody>
 

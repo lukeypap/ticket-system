@@ -5,6 +5,11 @@ export async function getAll() {
     return tickets;
 }
 
+export async function getById(id: number) {
+    const ticket = await fetch(`${URL}/${id}`).then((res) => res.json());
+    return ticket;
+}
+
 export async function deleteById(id: number) {
     const ticket = await fetch(`${URL}/${id}`, { method: "DELETE" }).then((res) => res.json());
     return ticket;
@@ -15,7 +20,7 @@ export async function updateStatus(id: number, status: string) {
         status: status,
     };
     const ticket = await fetch(`${URL}/${id}`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
             "Content-Type": "application/json",
         },

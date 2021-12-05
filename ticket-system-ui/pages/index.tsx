@@ -14,7 +14,6 @@ const IndexPage = () => {
                 <VStack width="full" height="full" style={{ marginInlineStart: "0px" }}>
                     <Navbar />
                     <VStack
-                        pt={8}
                         width="full"
                         height="full"
                         spacing={4}

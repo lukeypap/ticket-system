@@ -9,13 +9,13 @@ import { IoTicket } from "react-icons/io5";
 interface Props {
     onOpen?: () => void;
     title: string;
-    handleSearchChange: (e) => void;
+    handleSearchChange?: (e) => void;
 }
 
 export const PageHeader = ({ onOpen, title, handleSearchChange }: Props) => {
     const { colorMode, toggleColorMode } = useColorMode();
     return (
-        <HStack width="full" pl={10} pr={10}>
+        <HStack width="full" pl={10} pr={10} pt={5}>
             <Flex justifyContent="space-between" alignItems="center" flex={1}>
                 <Flex>
                     <Heading
