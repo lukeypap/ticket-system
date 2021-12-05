@@ -21,7 +21,7 @@ export const navItems: NavItem[] = [
     },
     {
         type: "link",
-        href: "/producers",
+        href: "/users",
         icon: FaUserAlt,
         label: "Users",
     },

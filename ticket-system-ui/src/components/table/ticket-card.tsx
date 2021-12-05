@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { Flex, Box, Badge, Text, HStack, Button, useColorMode } from "@chakra-ui/react";
+import { Flex, Box, Text, HStack, Button, useColorMode, Avatar, VStack } from "@chakra-ui/react";
 import React from "react";
 import { BsCheckLg } from "react-icons/bs";
-import { FaEdit, FaEllipsisH, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import { ITicket } from "../../types/ITicket";
 import { formatDate } from "../../utils/formatDate";
 import { Dropdown } from "../dropdown";
@@ -32,7 +32,6 @@ export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModa
         <Flex
             boxShadow="md"
             p={3}
-            py={4}
             bg={colorMode === "light" ? "gray.50" : "gray.700"}
             borderRadius="md"
             w="full"
@@ -70,18 +69,24 @@ export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModa
                         {ticket.message ? ticket.message : "Empty description..."}
                     </Text>
                 </Box>
-                <Box w="140px">
-                    <Text>{ticket.user}</Text>
-                    <Text
-                        fontWeight="light"
-                        textOverflow="ellipsis"
-                        overflow="hidden"
-                        whiteSpace="nowrap"
-                        fontSize="xs"
-                        opacity="0.8"
-                    >
-                        test@gmail.com
-                    </Text>
+                <Box w="180px">
+                    <VStack w="full" alignItems="start">
+                        <HStack pb={1}>
+                            <Avatar name={ticket.user} size="xs" />
+                            <Text>{ticket.user}</Text>
+                        </HStack>
+                        <Text
+                            fontWeight="light"
+                            textOverflow="ellipsis"
+                            overflow="hidden"
+                            whiteSpace="nowrap"
+                            fontSize="xs"
+                            opacity="0.8"
+                            style={{ marginTop: "0px" }}
+                        >
+                            test@gmail.com
+                        </Text>
+                    </VStack>
                 </Box>
                 <Box w="150px">
                     <Dropdown
@@ -90,7 +95,7 @@ export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModa
                         handleStatus={handleStatus}
                     />
                 </Box>
-                <Box w="130px" fontSize="xs">
+                <Box w="80px" fontSize="xs">
                     <Text>{formatDate(ticket.createdAt)}</Text>
                 </Box>
                 <Box>

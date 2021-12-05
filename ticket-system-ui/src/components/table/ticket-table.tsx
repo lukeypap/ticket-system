@@ -41,13 +41,13 @@ export const TicketTable = ({
                 <Box w="200px">
                     <Text>TITLE</Text>
                 </Box>
-                <Box w="150px">
+                <Box w="185px">
                     <Text>NAME</Text>
                 </Box>
                 <Box w="150px">
                     <Text>STATUS</Text>
                 </Box>
-                <Box w="160px">
+                <Box w="120px">
                     <Text>CREATED</Text>
                 </Box>
                 <Box>

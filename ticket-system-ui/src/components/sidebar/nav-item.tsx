@@ -1,7 +1,7 @@
 import NextLink from "next/link";
 import { Heading, Icon, Text, HStack, Box, Link } from "@chakra-ui/react";
 
-import { NavItem as Item } from "types/nav-item";
+import { NavItem as Item } from "../../types/nav-item";
 
 type Props = {
     item: Item;
@@ -15,7 +15,7 @@ export const NavItem = ({ isActive, item }: Props) => {
         const { icon } = item;
 
         return (
-            <NextLink href="/" passHref>
+            <NextLink href={item.href} passHref>
                 <Link variant="unstyled" _hover={{ textDecoration: "none" }}>
                     <HStack
                         align="center"

@@ -43,7 +43,8 @@ export const Content = () => {
             (ticket) =>
                 `${ticket.id}`.includes(searchTerm) ||
                 ticket.title.toLowerCase().includes(searchTerm) ||
-                ticket.user.toLowerCase().includes(searchTerm)
+                ticket.user.toLowerCase().includes(searchTerm) ||
+                ticket.status.toLowerCase().includes(searchTerm)
         );
         setFilteredTickets(newTickets);
     }, [searchTerm]);

@@ -3,9 +3,8 @@ import { PageHeader } from "../header";
 import { getById } from "../../api/tickets";
 import { ITicket } from "../../types/ITicket";
 import { VStack } from "@chakra-ui/layout";
-
 interface Props {
-    id: number;
+    id: any;
 }
 
 const initialValues: ITicket = {
@@ -17,7 +16,13 @@ const initialValues: ITicket = {
     isOpen: undefined,
     createdAt: "",
     updatedAt: "",
-    comments: [],
+    comments: [
+        {
+            id: -1,
+            message: "",
+            createdAt: "",
+        },
+    ],
 };
 
 export const Ticket = ({ id }: Props) => {
@@ -25,10 +30,17 @@ export const Ticket = ({ id }: Props) => {
 
     useEffect(() => {
         const getTicket = async () => {
-            setTicket(await getById(id));
+            //Hacky fix find work around or better solution to guarantee url
+            if (!id) {
+                const windowUrl = window.location.href;
+                const newId = windowUrl.substring(29);
+                setTicket(await getById(parseInt(newId)));
+                //http://localhost:3000/ticket/83
+            } else {
+                setTicket(await getById(id));
+            }
         };
         getTicket();
-        console.log(ticket);
     }, []);
 
     return (
@@ -42,7 +54,7 @@ export const Ticket = ({ id }: Props) => {
                 <p>{ticket.user}</p>
                 <p>{ticket.createdAt}</p>
                 <p>{ticket.updatedAt}</p>
-                {ticket.comments.length !== 0 ? (
+                {ticket.comments[0].message !== "" ? (
                     ticket.comments.map((comment) => (
                         <VStack>
                             <p>{comment.id}</p>
