@@ -6,18 +6,19 @@ import {
   Param,
   Patch,
   Post,
-  Put,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { CommentDto } from '../dto/comment.dto';
 import { TicketDto } from '../dto/ticket.dto';
 import { UpdateTicketDto } from '../dto/update-ticket.dto';
-import { CommentEntity } from '../entity/comment.entity';
 import { TicketService } from '../service/ticket.service';
 
 @Controller('ticket')
 export class TicketController {
   constructor(private readonly _ticketService: TicketService) {}
 
+  //@UseGuards(JwtGuard)
   @Get()
   async findAll(): Promise<TicketDto[]> {
     return await this._ticketService.findAll();

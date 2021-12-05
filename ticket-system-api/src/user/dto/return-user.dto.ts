@@ -10,7 +10,7 @@ import {
 } from 'class-validator';
 import { Role } from '../entity/role.enum';
 
-export class UserDto {
+export class ReturnUserDto {
   @IsString()
   @IsNotEmpty()
   firstName: string;
@@ -22,10 +22,6 @@ export class UserDto {
   @IsEmail()
   @IsNotEmpty()
   email: string;
-
-  @IsString()
-  @IsNotEmpty()
-  password: string;
 
   @IsString()
   @IsOptional()
