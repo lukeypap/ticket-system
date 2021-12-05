@@ -1,14 +1,9 @@
-import { Exclude } from 'class-transformer';
-import {
-  IsBoolean,
-  IsDate,
-  IsNumber,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsArray, IsOptional, IsString } from 'class-validator';
+import { CommentEntity } from '../entity/comment.entity';
 
 export class TicketDto {
   @IsString()
+  @IsOptional()
   title: string;
 
   @IsString()
@@ -23,7 +18,11 @@ export class TicketDto {
   @IsOptional()
   status: string;
 
-  @IsBoolean()
+  @IsString()
   @IsOptional()
-  isOpen: boolean;
+  priority: string;
+
+  @IsArray()
+  @IsOptional()
+  comments: CommentEntity[];
 }

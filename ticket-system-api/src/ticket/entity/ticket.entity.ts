@@ -2,9 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  JoinTable,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { CommentEntity } from './comment.entity';
 
 @Entity('tickets')
 export class TicketEntity {
@@ -23,8 +27,8 @@ export class TicketEntity {
   @Column({ default: 'open' })
   status: string;
 
-  @Column({ default: true })
-  isOpen: boolean;
+  @Column({ nullable: true, default: 'low' })
+  priority: string;
 
   @CreateDateColumn({
     type: 'timestamptz',
@@ -38,4 +42,9 @@ export class TicketEntity {
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
   public updatedAt: Date;
+
+  @OneToMany(() => CommentEntity, (comment) => comment.ticket, {
+    cascade: true,
+  })
+  comments: CommentEntity[];
 }

@@ -10,6 +10,7 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  app.enableCors();
   //app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   await app.listen(3200);
 }

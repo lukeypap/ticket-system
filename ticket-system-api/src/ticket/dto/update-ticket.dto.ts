@@ -1,4 +1,5 @@
-import { IsOptional } from 'class-validator';
+import { IsArray, IsOptional } from 'class-validator';
+import { CommentEntity } from '../entity/comment.entity';
 
 export class UpdateTicketDto {
   @IsOptional()
@@ -12,4 +13,8 @@ export class UpdateTicketDto {
 
   @IsOptional()
   isOpen?: boolean;
+
+  @IsArray()
+  @IsOptional()
+  comments: CommentEntity[];
 }

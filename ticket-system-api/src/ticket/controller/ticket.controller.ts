@@ -4,11 +4,14 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Put,
 } from '@nestjs/common';
+import { CommentDto } from '../dto/comment.dto';
 import { TicketDto } from '../dto/ticket.dto';
 import { UpdateTicketDto } from '../dto/update-ticket.dto';
+import { CommentEntity } from '../entity/comment.entity';
 import { TicketService } from '../service/ticket.service';
 
 @Controller('ticket')
@@ -36,7 +39,15 @@ export class TicketController {
     return this._ticketService.create(user);
   }
 
-  @Put(':id')
+  @Post(':id/comment')
+  createComment(
+    @Body() comment: CommentDto,
+    @Param('id') id: number,
+  ): Promise<TicketDto> {
+    return this._ticketService.createComment(comment, id);
+  }
+
+  @Patch(':id')
   update(
     @Param() id: number,
     @Body() ticket: UpdateTicketDto,
