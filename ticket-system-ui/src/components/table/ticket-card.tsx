@@ -35,6 +35,7 @@ export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModa
             bg={colorMode === "light" ? "gray.50" : "gray.700"}
             borderRadius="md"
             w="full"
+            maxW="7xl"
             borderLeft="8px"
             opacity="0.8"
             borderLeftColor={`${chooseLabelColor(ticket)}.400`}
@@ -44,8 +45,9 @@ export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModa
                 transform: "scale(1.005)",
                 opacity: 1,
             }}
+            justifyContent="space-between"
         >
-            <HStack spacing={5} fontSize="sm">
+            <HStack spacing={{ base: 5, "2xl": 12 }} fontSize="sm">
                 <Box w="15px">
                     <Text fontSize="xs">{ticket.id}</Text>
                 </Box>
@@ -99,7 +101,7 @@ export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModa
                     <Text>{formatDate(ticket.createdAt)}</Text>
                 </Box>
                 <Box>
-                    <Flex justifyContent="center" alignItems="center">
+                    <Flex justifyContent="flex-end" alignItems="center">
                         <Button size="xs" mx={1} colorScheme="yellow" variant="ghost">
                             <FaEdit />
                         </Button>

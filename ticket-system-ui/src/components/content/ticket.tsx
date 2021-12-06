@@ -54,12 +54,12 @@ export const Ticket = ({ id }: Props) => {
                 <p>{ticket.user}</p>
                 <p>{ticket.createdAt}</p>
                 <p>{ticket.updatedAt}</p>
-                {ticket.comments[0].message !== "" ? (
-                    ticket.comments.map((comment) => (
+                {ticket.comments || ticket.comments[0].message !== "" ? (
+                    ticket.comments.map((comment, idx) => (
                         <VStack>
-                            <p>{comment.id}</p>
-                            <p>{comment.message}</p>
-                            <p>{comment.createdAt}</p>
+                            <p key={idx}>{comment.id}</p>
+                            <p key={idx}>{comment.message}</p>
+                            <p key={idx}>{comment.createdAt}</p>
                         </VStack>
                     ))
                 ) : (

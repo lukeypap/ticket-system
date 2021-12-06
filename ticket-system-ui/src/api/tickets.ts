@@ -1,4 +1,4 @@
-const URL = "http://localhost:3200/ticket";
+const URL = "http://192.168.1.25:3200/ticket";
 
 export async function getAll(token) {
     const data = await fetch(URL, { headers: { Authorization: `Bearer ${token}` } })
@@ -44,7 +44,7 @@ export async function create(values: Object) {
 }
 
 export async function login(values: Object) {
-    const token = await fetch("http://localhost:3200/auth/login", {
+    const token = await fetch("http://192.168.1.25:3200/auth/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

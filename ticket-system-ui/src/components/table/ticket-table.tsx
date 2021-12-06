@@ -27,13 +27,14 @@ export const TicketTable = ({
         <VStack pb={2} w="full" px={10}>
             <HStack
                 mt={0}
-                spacing={4}
+                spacing={{ base: 4, "2xl": 12 }}
                 p={5}
                 w="full"
                 letterSpacing={1}
                 fontSize="xs"
                 fontWeight="semibold"
                 opacity="0.7"
+                maxW="7xl"
             >
                 <Box w="20px">
                     <Text>ID</Text>
