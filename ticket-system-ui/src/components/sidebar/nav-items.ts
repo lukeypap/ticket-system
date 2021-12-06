@@ -71,7 +71,7 @@ export const navItems: NavItem[] = [
     },
     {
         type: "link",
-        href: "/logout",
+        href: "/login",
         icon: BsBoxArrowLeft,
         label: "Log Out",
     },

@@ -1,4 +1,6 @@
-import { HStack, VStack, Flex, Text, Divider, useDisclosure, Box } from "@chakra-ui/react";
+import { HStack, VStack, Flex, Text, Divider, useDisclosure, Box, Heading } from "@chakra-ui/react";
+import router, { useRouter } from "next/router";
+import { setUncaughtExceptionCaptureCallback } from "process";
 import { useEffect, useState } from "react";
 import { IoWarning } from "react-icons/io5";
 import { create, deleteById, getAll, updateStatus } from "../../api/tickets";
@@ -12,7 +14,26 @@ import { TicketCard } from "../table/ticket-card";
 import { TicketTable } from "../table/ticket-table";
 
 export const Content = () => {
-    const [tickets, setTickets] = useState([]);
+    //hacky initial load fix...
+    const [tickets, setTickets] = useState([
+        {
+            id: -1,
+            title: "title",
+            user: "user",
+            message: "message",
+            status: "status",
+            priority: "priority",
+            createdAt: "2021-12-04T20:46:33.987Z",
+            updatedAt: "2021-12-04T20:46:33.987Z",
+            comments: [
+                {
+                    id: -1,
+                    message: "message",
+                    createdAt: "2021-12-04T20:46:33.987Z",
+                },
+            ],
+        },
+    ]);
     const [filteredTickets, setFilteredTickets] = useState(tickets);
     const [searchTerm, setSearchTerm] = useState("");
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -23,17 +44,30 @@ export const Content = () => {
         onOpen: onOpenCreateTicketModal,
         onClose: onCloseCreateTicketModal,
     } = useDisclosure();
+    const jwt = {
+        token: "",
+    };
+    const [currentUser, setCurrentUser] = useState({ firstName: "" });
+    const router = useRouter();
 
     useEffect(() => {
         const getTickets = async () => {
-            setTickets(await getAll());
+            jwt.token = localStorage.getItem("token");
+            const data = await getAll(jwt.token);
+            if (data.tickets) {
+                setTickets(data.tickets);
+                setCurrentUser(data.user);
+            } else {
+                router.push("/login");
+            }
         };
         getTickets();
     }, []);
 
     useEffect(() => {
         const getTickets = async () => {
-            setTickets(await getAll());
+            const data = await getAll(jwt.token);
+            setTickets(data.tickets);
         };
         getTickets();
     }, [lastCreatedTicket]);
@@ -99,7 +133,7 @@ export const Content = () => {
         >
             <PageHeader
                 onOpen={onOpenCreateTicketModal}
-                title="Latest Tickets"
+                title={`Welcome ${currentUser.firstName}`}
                 handleSearchChange={handleSearchChange}
             />
             <TicketTable
@@ -111,6 +145,7 @@ export const Content = () => {
                 searchTerm={searchTerm}
                 filteredTickets={filteredTickets}
             />
+
             <ConfirmModal
                 message="Are you sure you wish to delete this? You can't undo this."
                 title="Delete Ticket"

@@ -55,27 +55,31 @@ export const TicketTable = ({
                 </Box>
             </HStack>
 
-            {searchTerm
-                ? filteredTickets.map((ticket, id) => (
-                      <TicketCard
-                          key={id}
-                          ticket={ticket}
-                          handleStatus={handleStatus}
-                          onOpen={onOpen}
-                          handleDelete={handleDelete}
-                          setModalId={setModalId}
-                      />
-                  ))
-                : tickets.map((ticket, id) => (
-                      <TicketCard
-                          key={id}
-                          ticket={ticket}
-                          handleStatus={handleStatus}
-                          onOpen={onOpen}
-                          handleDelete={handleDelete}
-                          setModalId={setModalId}
-                      />
-                  ))}
+            {searchTerm ? (
+                filteredTickets.map((ticket, id) => (
+                    <TicketCard
+                        key={id}
+                        ticket={ticket}
+                        handleStatus={handleStatus}
+                        onOpen={onOpen}
+                        handleDelete={handleDelete}
+                        setModalId={setModalId}
+                    />
+                ))
+            ) : tickets ? (
+                tickets.map((ticket, id) => (
+                    <TicketCard
+                        key={id}
+                        ticket={ticket}
+                        handleStatus={handleStatus}
+                        onOpen={onOpen}
+                        handleDelete={handleDelete}
+                        setModalId={setModalId}
+                    />
+                ))
+            ) : (
+                <p>Unauth</p>
+            )}
         </VStack>
     );
 };

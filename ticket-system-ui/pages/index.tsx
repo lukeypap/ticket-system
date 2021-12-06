@@ -7,6 +7,7 @@ import { Sidebar } from "../src/components/sidebar";
 
 const IndexPage = () => {
     const { colorMode, toggleColorMode } = useColorMode();
+
     return (
         <VStack height="100vh" width="full" spacing={0} m={0}>
             <HStack width="full" flex={1} overflow="hidden">

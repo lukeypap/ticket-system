@@ -4,8 +4,8 @@ export interface ITicket {
     user: string;
     message: string;
     status: string;
-    isOpen: boolean;
-    comments: [{ id: number; message: string; createdAt: string }];
+    isOpen?: boolean;
+    comments?: { id: number; message: string; createdAt: string }[];
     createdAt: string;
     updatedAt: string;
 }

@@ -18,15 +18,39 @@ import {
     useColorMode,
 } from "@chakra-ui/react";
 import { useColorModeValue } from "@chakra-ui/system";
-import React from "react";
+import router, { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
 import { FaBell, FaSearch } from "react-icons/fa";
 import { IoChevronDown } from "react-icons/io5";
+import { getAll } from "../../api/tickets";
 
 interface Props {}
 
 export const Navbar = (props: Props) => {
     const { colorMode, toggleColorMode } = useColorMode();
+    const jwt = {
+        token: "",
+    };
+    const [currentUser, setCurrentUser] = useState({
+        firstName: "firstName",
+        lastName: "lastName",
+        role: "role",
+    });
+    const router = useRouter();
+
+    useEffect(() => {
+        const getTickets = async () => {
+            jwt.token = localStorage.getItem("token");
+            const data = await getAll(jwt.token);
+            if (data.user) {
+                setCurrentUser(data.user);
+            } else {
+                router.push("/login");
+            }
+        };
+        getTickets();
+    }, []);
 
     return (
         <Flex
@@ -62,10 +86,8 @@ export const Navbar = (props: Props) => {
                         <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: "none" }}>
                             <HStack>
                                 <Avatar
-                                    size={"sm"}
-                                    src={
-                                        "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-                                    }
+                                    size="sm"
+                                    name={currentUser.firstName + " " + currentUser.lastName}
                                 />
                                 <VStack
                                     display={{ base: "none", md: "flex" }}
@@ -73,9 +95,12 @@ export const Navbar = (props: Props) => {
                                     spacing="1px"
                                     ml="2"
                                 >
-                                    <Text fontSize="sm">Justina Clark</Text>
+                                    <Text fontSize="sm">
+                                        {currentUser.firstName + " " + currentUser.lastName}
+                                    </Text>
                                     <Text fontSize="xs" color="gray.600">
-                                        Admin
+                                        {currentUser.role[0].toUpperCase() +
+                                            currentUser.role.substring(1) || "nothing"}
                                     </Text>
                                 </VStack>
                                 <Box display={{ base: "none", md: "flex" }}>

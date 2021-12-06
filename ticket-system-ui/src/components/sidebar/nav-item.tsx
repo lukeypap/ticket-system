@@ -10,13 +10,20 @@ type Props = {
 
 export const NavItem = ({ isActive, item }: Props) => {
     const { label } = item;
+    const handleLogout = () => {
+        if (label === "Log Out") {
+            console.log("removing item");
+            localStorage.removeItem("token");
+        }
+        console.log("hello");
+    };
 
     if (item.type === "link") {
         const { icon } = item;
 
         return (
             <NextLink href={item.href} passHref>
-                <Link variant="unstyled" _hover={{ textDecoration: "none" }}>
+                <Link variant="unstyled" _hover={{ textDecoration: "none" }} onClick={handleLogout}>
                     <HStack
                         align="center"
                         justify="flex-start"

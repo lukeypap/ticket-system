@@ -1,8 +1,11 @@
 const URL = "http://localhost:3200/ticket";
 
-export async function getAll() {
-    const tickets = await fetch(URL).then((response) => response.json());
-    return tickets;
+export async function getAll(token) {
+    const data = await fetch(URL, { headers: { Authorization: `Bearer ${token}` } })
+        .then((response) => response.json())
+        .catch((err) => console.log(err));
+    console.log(data);
+    return data;
 }
 
 export async function getById(id: number) {

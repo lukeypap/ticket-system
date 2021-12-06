@@ -12,6 +12,7 @@ import {
     Text,
     useColorModeValue,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { login } from "../../api/tickets";
 
@@ -22,6 +23,8 @@ const initialValues = {
 
 export const LoginCard = () => {
     const [values, setValues] = useState(initialValues);
+    const [authenticated, setAuthenticated] = useState(null);
+    const router = useRouter();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -33,7 +36,12 @@ export const LoginCard = () => {
     };
     const handleLogin = async (values: { email: string; password: string }) => {
         const token = await login(values);
-        console.log(token);
+        if (token.token) {
+            localStorage.setItem("token", token.token);
+            router.push("/");
+        } else {
+            setAuthenticated(false);
+        }
     };
 
     return (
@@ -57,6 +65,7 @@ export const LoginCard = () => {
                     p={8}
                 >
                     <Stack spacing={4}>
+                        {authenticated === false ? <Text color="red">Invalid login!</Text> : ""}
                         <FormControl id="email">
                             <FormLabel>Email address</FormLabel>
                             <Input
@@ -65,6 +74,7 @@ export const LoginCard = () => {
                                 value={values.email}
                                 placeholder="Your email."
                                 onChange={handleInputChange}
+                                isInvalid={authenticated === false ? true : false}
                             />
                         </FormControl>
 
@@ -75,6 +85,7 @@ export const LoginCard = () => {
                                 name="password"
                                 value={values.password}
                                 onChange={handleInputChange}
+                                isInvalid={authenticated === false ? true : false}
                             />
                         </FormControl>
 
