@@ -29,27 +29,25 @@ export class AuthService {
   async validateUser(
     email: string,
     password: string,
-  ): Promise<User | undefined> {
+  ): Promise<UserEntity | undefined> {
     const user = await this._userRepo.findOne(
       { email },
       {
         select: ['id', 'firstName', 'lastName', 'email', 'password', 'role'],
       },
     );
-    if (!user) {
-      return;
-    } else if (await bcrypt.compare(password, user.password)) {
+    if (user && (await bcrypt.compare(password, user.password))) {
       delete user.password;
       return user;
     }
   }
 
   async login(user: UserLoginDto): Promise<string> {
-    const { email, password } = user;
-    const validatedUser = await this.validateUser(email, password);
+    const validatedUser = await this.validateUser(user.email, user.password);
     if (validatedUser) {
       //create JWT
-      return await this._jwtService.signAsync({ validatedUser });
+      const payload = { sub: validatedUser.id };
+      return await this._jwtService.signAsync(payload);
     }
   }
 }
