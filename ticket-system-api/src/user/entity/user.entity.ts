@@ -1,7 +1,9 @@
+import { CommentEntity } from 'src/ticket/entity/comment.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Role } from './role.enum';
@@ -37,4 +39,9 @@ export class UserEntity {
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
   createdAt: Date;
+
+  @OneToMany(() => CommentEntity, (comment) => comment.user, {
+    cascade: true,
+  })
+  comments: CommentEntity[];
 }

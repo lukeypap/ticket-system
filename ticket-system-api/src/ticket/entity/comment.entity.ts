@@ -1,3 +1,4 @@
+import { UserEntity } from 'src/user/entity/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -22,6 +23,11 @@ export class CommentEntity {
   })
   public createdAt: Date;
 
-  @ManyToOne(() => TicketEntity, (ticket) => ticket.comments)
+  @ManyToOne(() => TicketEntity, (ticket) => ticket.comments, {
+    onDelete: 'CASCADE',
+  })
   ticket: TicketEntity;
+
+  @ManyToOne(() => UserEntity, (user) => user.comments)
+  user: UserEntity;
 }

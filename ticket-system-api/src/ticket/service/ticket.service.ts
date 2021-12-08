@@ -6,6 +6,7 @@ import { TicketEntity } from '../entity/ticket.entity';
 import { plainToInstance } from 'class-transformer';
 import { CommentEntity } from '../entity/comment.entity';
 import { CommentDto } from '../dto/comment.dto';
+import { UserEntity } from 'src/user/entity/user.entity';
 
 @Injectable()
 export class TicketService {
@@ -14,6 +15,8 @@ export class TicketService {
     private readonly _ticketRepo: Repository<TicketEntity>,
     @Inject('COMMENT_REPOSITORY')
     private readonly _commentRepo: Repository<CommentEntity>,
+    @Inject('USER_REPOSITORY')
+    private readonly _userRepo: Repository<UserEntity>,
   ) {}
 
   async create(ticket: TicketDto): Promise<TicketDto> {
@@ -24,11 +27,19 @@ export class TicketService {
     return ticketDto;
   }
 
-  async createComment(comment: CommentDto, id: number): Promise<TicketDto> {
+  async createComment(
+    comment: CommentDto,
+    id: number,
+    authUser: any,
+  ): Promise<TicketDto> {
     const ticket = await this._ticketRepo.findOne(id);
+    const user = await this._userRepo.findOne(authUser.id);
     comment.ticket = ticket;
+    comment.user = user;
     await this._commentRepo.save(comment);
-    return await this._ticketRepo.findOne(id, { relations: ['comments'] });
+    return await this._ticketRepo.findOne(id, {
+      relations: ['comments', 'comments.user'],
+    });
   }
 
   async findAll(): Promise<TicketDto[]> {
@@ -38,7 +49,7 @@ export class TicketService {
         order: {
           createdAt: 'DESC',
         },
-        relations: ['comments'],
+        relations: ['comments', 'comments.user'],
       }),
     );
     return ticketDto;
@@ -47,7 +58,9 @@ export class TicketService {
   async findOne(id: number): Promise<TicketDto> {
     const ticketDto = plainToInstance(
       TicketDto,
-      await this._ticketRepo.findOne(id, { relations: ['comments'] }),
+      await this._ticketRepo.findOne(id, {
+        relations: ['comments', 'comments.user'],
+      }),
     );
     return ticketDto;
   }
@@ -56,7 +69,9 @@ export class TicketService {
     await this._ticketRepo.update(id, ticket);
     const ticketDto = plainToInstance(
       TicketDto,
-      await this._ticketRepo.findOne(id),
+      await this._ticketRepo.findOne(id, {
+        relations: ['comments', 'comments.user'],
+      }),
     );
     return ticketDto;
   }
@@ -73,7 +88,10 @@ export class TicketService {
   async findOpen(): Promise<TicketDto[]> {
     const ticketDto = plainToInstance(
       TicketDto,
-      await this._ticketRepo.find({ where: { isOpen: true } }),
+      await this._ticketRepo.find({
+        where: { isOpen: true },
+        relations: ['comments', 'comments.user'],
+      }),
     );
     return ticketDto;
   }
@@ -81,7 +99,10 @@ export class TicketService {
   async findClosed(): Promise<TicketDto[]> {
     const ticketDto = plainToInstance(
       TicketDto,
-      await this._ticketRepo.find({ where: { isOpen: false } }),
+      await this._ticketRepo.find({
+        where: { isOpen: false },
+        relations: ['comments', 'comments.user'],
+      }),
     );
     return ticketDto;
   }

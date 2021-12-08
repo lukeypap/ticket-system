@@ -28,7 +28,7 @@ export class TicketController {
   }
 
   @Get(':id')
-  findOne(@Param() id: number): Promise<TicketDto> {
+  findOne(@Param() id: number): Promise<any> {
     return this._ticketService.findOne(id);
   }
 
@@ -43,12 +43,15 @@ export class TicketController {
     return this._ticketService.create(user);
   }
 
+  @UseGuards(JwtGuard)
   @Post(':id/comment')
   createComment(
     @Body() comment: CommentDto,
     @Param('id') id: number,
+    @Req() req: any,
   ): Promise<TicketDto> {
-    return this._ticketService.createComment(comment, id);
+    const user = req.user;
+    return this._ticketService.createComment(comment, id, user);
   }
 
   @Patch(':id')
