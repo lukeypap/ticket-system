@@ -6,6 +6,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { ITicket } from "../../types/ITicket";
 import { formatDate } from "../../utils/formatDate";
 import { Dropdown } from "../dropdown";
+import { chooseLabelColor } from "../../utils/chooseTicketColor";
 
 interface Props {
     ticket: ITicket;
@@ -17,17 +18,7 @@ interface Props {
 
 export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModalId }: Props) => {
     const { colorMode, toggleColorMode } = useColorMode();
-    const chooseLabelColor = (ticket) => {
-        if (ticket.status === "done") {
-            return "green";
-        } else if (ticket.status === "work in progress") {
-            return "blue";
-        } else if (ticket.status === "open") {
-            return "gray";
-        } else if (ticket.status === "cancelled") {
-            return "red";
-        }
-    };
+
     return (
         <Flex
             boxShadow="md"
@@ -48,10 +39,10 @@ export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModa
             justifyContent="space-between"
         >
             <HStack spacing={{ base: 5, "2xl": 12 }} fontSize="sm">
-                <Box w="15px">
+                <Box w="15px" overflow="hidden">
                     <Text fontSize="xs">{ticket.id}</Text>
                 </Box>
-                <Box w="200px">
+                <Box w="200px" overflow="hidden">
                     <Text
                         fontWeight="semibold"
                         textOverflow="ellipsis"
@@ -95,6 +86,7 @@ export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModa
                         color={chooseLabelColor(ticket)}
                         ticket={ticket}
                         handleStatus={handleStatus}
+                        size="xs"
                     />
                 </Box>
                 <Box w="80px" fontSize="xs">

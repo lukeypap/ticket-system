@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { login } from "../../api/tickets";
+import { login } from "../../api/auth";
 
 const initialValues = {
     email: "",

@@ -2,6 +2,7 @@ import { List, ListItem, VStack, useColorMode } from "@chakra-ui/react";
 import { navItems } from "./nav-items";
 import { NavItem } from "./nav-item";
 import { Logo } from "../logo";
+import { useState } from "react";
 
 export const Sidebar = () => {
     const { colorMode, toggleColorMode } = useColorMode();

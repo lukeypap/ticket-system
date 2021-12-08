@@ -15,27 +15,9 @@ import { TicketTable } from "../table/ticket-table";
 
 export const Content = () => {
     //hacky initial load fix...
-    const [tickets, setTickets] = useState([
-        {
-            id: -1,
-            title: "title",
-            user: "user",
-            message: "message",
-            status: "status",
-            priority: "priority",
-            createdAt: "2021-12-04T20:46:33.987Z",
-            updatedAt: "2021-12-04T20:46:33.987Z",
-            comments: [
-                {
-                    id: -1,
-                    message: "message",
-                    createdAt: "2021-12-04T20:46:33.987Z",
-                },
-            ],
-        },
-    ]);
+    const [tickets, setTickets] = useState([]);
     const [filteredTickets, setFilteredTickets] = useState(tickets);
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchTerm, setSearchTerm] = useState();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [modalId, setModalId] = useState();
     const [lastCreatedTicket, setLastCreatedTicket] = useState();
@@ -99,9 +81,6 @@ export const Content = () => {
 
     const handleStatus = async (id: number, status: string) => {
         const ticket = await updateStatus(id, status);
-        // const newTickets = tickets.filter((ticket) => ticket.id !== id);
-        // newTickets.push(ticket);
-        // setTickets(newTickets);
         const newTickets = tickets.map((ticket) => {
             if (ticket.id === id) {
                 ticket.status = status;
@@ -135,7 +114,9 @@ export const Content = () => {
                 onOpen={onOpenCreateTicketModal}
                 title={`Welcome ${currentUser.firstName}`}
                 handleSearchChange={handleSearchChange}
+                addText={"Here's the most recent tickets..."}
             />
+
             <TicketTable
                 tickets={tickets}
                 handleDelete={handleDelete}

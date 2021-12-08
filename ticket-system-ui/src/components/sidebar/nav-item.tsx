@@ -2,13 +2,14 @@ import NextLink from "next/link";
 import { Heading, Icon, Text, HStack, Box, Link } from "@chakra-ui/react";
 
 import { NavItem as Item } from "../../types/nav-item";
+import { useState } from "react";
 
 type Props = {
     item: Item;
     isActive: boolean;
 };
 
-export const NavItem = ({ isActive, item }: Props) => {
+export const NavItem = ({ isActive: IsActive, item }: Props) => {
     const { label } = item;
     const handleLogout = () => {
         if (label === "Log Out") {
@@ -20,6 +21,7 @@ export const NavItem = ({ isActive, item }: Props) => {
 
     if (item.type === "link") {
         const { icon } = item;
+        const [active, setActive] = useState(IsActive);
 
         return (
             <NextLink href={item.href} passHref>
@@ -31,16 +33,17 @@ export const NavItem = ({ isActive, item }: Props) => {
                         transition="ease-out"
                         transitionProperty="background"
                         transitionDuration="normal"
-                        _hover={{
-                            color: "brand.red",
-                        }}
-                        ms={0}
-                        borderRight={isActive ? "4px" : "0px"}
-                        borderRightColor={isActive ? "brand.red" : ""}
+                        _hover={active ? { color: "" } : { color: "brand.red" }}
+                        w="90%"
+                        borderRight={active ? "4px" : "0px"}
+                        borderRightColor={active ? "brand.red" : ""}
+                        bg={active ? "brand.red" : ""}
+                        borderRadius={active ? "xl" : "none"}
                         //bg={isActive ? "brand.red" : ""}
-                        color={isActive ? "brand.red" : ""}
+                        color={active ? "white" : ""}
+                        onClick={() => setActive(true)}
                     >
-                        <Icon width={5} height={5} mr={4} ml={8} as={icon} />
+                        <Icon width={5} height={5} mr={4} ml={5} as={icon} />
                         <Text fontSize="sm" fontWeight="light" flex={1} letterSpacing="wider">
                             {label}
                         </Text>

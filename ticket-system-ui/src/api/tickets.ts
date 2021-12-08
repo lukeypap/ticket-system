@@ -4,7 +4,6 @@ export async function getAll(token) {
     const data = await fetch(URL, { headers: { Authorization: `Bearer ${token}` } })
         .then((response) => response.json())
         .catch((err) => console.log(err));
-    console.log(data);
     return data;
 }
 
@@ -41,15 +40,4 @@ export async function create(values: Object) {
         body: JSON.stringify(values),
     }).then((res) => res.json());
     return ticket;
-}
-
-export async function login(values: Object) {
-    const token = await fetch("http://192.168.1.25:3200/auth/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-    }).then((res) => res.json());
-    return token;
 }

@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/button";
-import { Divider, Flex, Heading, HStack, Text } from "@chakra-ui/layout";
+import { Divider, Flex, Heading, HStack, Text, VStack } from "@chakra-ui/layout";
 import { InputGroup, InputLeftElement, Input, useColorMode } from "@chakra-ui/react";
 import React from "react";
 import { BsTrash } from "react-icons/bs";
@@ -10,23 +10,29 @@ interface Props {
     onOpen?: () => void;
     title: string;
     handleSearchChange?: (e) => void;
+    addText?: string;
 }
 
-export const PageHeader = ({ onOpen, title, handleSearchChange }: Props) => {
+export const PageHeader = ({ onOpen, title, handleSearchChange, addText }: Props) => {
     const { colorMode, toggleColorMode } = useColorMode();
     return (
         <HStack width="full" pl={10} pr={10} pt={5}>
             <Flex justifyContent="space-between" alignItems="center" flex={1}>
                 <Flex>
-                    <Heading
-                        color="gray.light"
-                        fontWeight="normal"
-                        textTransform="uppercase"
-                        letterSpacing={6}
-                        fontSize="xl"
-                    >
-                        {title}
-                    </Heading>
+                    <VStack>
+                        <Heading
+                            color="gray.light"
+                            fontWeight="normal"
+                            textTransform="uppercase"
+                            letterSpacing={6}
+                            fontSize="xl"
+                        >
+                            {title}
+                        </Heading>
+                        <Text color="gray.light" fontWeight="light" fontSize="sm">
+                            {addText}
+                        </Text>
+                    </VStack>
                 </Flex>
                 <Flex>
                     <Flex>

@@ -7,18 +7,19 @@ interface Props {
     ticket: ITicket;
     color: string;
     handleStatus: (id, status) => void;
+    size: string;
 }
 
-export const Dropdown = ({ ticket, color, handleStatus }: Props) => {
+export const Dropdown = ({ ticket, color, handleStatus, size }: Props) => {
     return (
         <Menu>
             <MenuButton
                 as={Button}
                 rightIcon={<IoChevronDown />}
                 colorScheme={color}
-                size="xs"
+                size={size}
                 textTransform="uppercase"
-                fontSize="xs"
+                fontSize={size}
             >
                 {ticket.status}
             </MenuButton>
