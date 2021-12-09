@@ -28,6 +28,8 @@ export class CommentEntity {
   })
   ticket: TicketEntity;
 
-  @ManyToOne(() => UserEntity, (user) => user.comments)
+  @ManyToOne(() => UserEntity, (user) => user.comments, {
+    nullable: false,
+  })
   user: UserEntity;
 }
