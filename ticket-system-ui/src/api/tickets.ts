@@ -41,3 +41,18 @@ export async function create(values: Object) {
     }).then((res) => res.json());
     return ticket;
 }
+
+export async function createComment(
+    id: number,
+    token: string,
+    comment: {
+        message: string;
+    }
+) {
+    const ticket = await fetch(`${URL}/${id}/comment`, {
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        method: "POST",
+        body: JSON.stringify(comment),
+    }).then((res) => res.json());
+    return ticket;
+}

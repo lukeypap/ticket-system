@@ -115,6 +115,7 @@ export const Content = () => {
                 title={`Welcome ${currentUser.firstName}`}
                 handleSearchChange={handleSearchChange}
                 addText={"Here's the most recent tickets..."}
+                renderSearchBar={true}
             />
 
             <TicketTable

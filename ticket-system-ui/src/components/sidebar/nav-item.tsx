@@ -34,7 +34,6 @@ export const NavItem = ({ isActive: IsActive, item }: Props) => {
                         transitionProperty="background"
                         transitionDuration="normal"
                         _hover={active ? { color: "" } : { color: "brand.red" }}
-                        w="90%"
                         borderRight={active ? "4px" : "0px"}
                         borderRightColor={active ? "brand.red" : ""}
                         bg={active ? "brand.red" : ""}
@@ -43,8 +42,14 @@ export const NavItem = ({ isActive: IsActive, item }: Props) => {
                         color={active ? "white" : ""}
                         onClick={() => setActive(true)}
                     >
-                        <Icon width={5} height={5} mr={4} ml={5} as={icon} />
-                        <Text fontSize="sm" fontWeight="light" flex={1} letterSpacing="wider">
+                        <Icon width={5} height={5} mr={4} ml={5} as={icon} opacity="0.8" />
+                        <Text
+                            fontSize="sm"
+                            fontWeight="light"
+                            flex={1}
+                            letterSpacing="wider"
+                            opacity="0.8"
+                        >
                             {label}
                         </Text>
                     </HStack>

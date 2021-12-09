@@ -11,9 +11,16 @@ interface Props {
     title: string;
     handleSearchChange?: (e) => void;
     addText?: string;
+    renderSearchBar: boolean;
 }
 
-export const PageHeader = ({ onOpen, title, handleSearchChange, addText }: Props) => {
+export const PageHeader = ({
+    onOpen,
+    title,
+    handleSearchChange,
+    addText,
+    renderSearchBar,
+}: Props) => {
     const { colorMode, toggleColorMode } = useColorMode();
     return (
         <HStack width="full" pl={10} pr={10} pt={5}>
@@ -34,39 +41,43 @@ export const PageHeader = ({ onOpen, title, handleSearchChange, addText }: Props
                         </Text>
                     </VStack>
                 </Flex>
-                <Flex>
+                {renderSearchBar ? (
                     <Flex>
-                        <InputGroup
+                        <Flex>
+                            <InputGroup
+                                size="sm"
+                                borderColor={colorMode === "light" ? "blue.500" : "blue.200"}
+                            >
+                                <InputLeftElement
+                                    pointerEvents="none"
+                                    color="gray.400"
+                                    children={<FaSearch />}
+                                />
+                                <Input
+                                    borderRightRadius="0"
+                                    border="2px"
+                                    variant="outline"
+                                    placeholder="Table search..."
+                                    onChange={(e) => handleSearchChange(e)}
+                                    _hover={{}}
+                                />
+                            </InputGroup>
+                        </Flex>
+                        <Button
+                            mr={2}
                             size="sm"
-                            borderColor={colorMode === "light" ? "blue.500" : "blue.200"}
+                            colorScheme="blue"
+                            fontWeight="md"
+                            leftIcon={<IoTicket />}
+                            onClick={onOpen}
+                            borderLeftRadius="0"
                         >
-                            <InputLeftElement
-                                pointerEvents="none"
-                                color="gray.400"
-                                children={<FaSearch />}
-                            />
-                            <Input
-                                borderRightRadius="0"
-                                border="2px"
-                                variant="outline"
-                                placeholder="Table search..."
-                                onChange={(e) => handleSearchChange(e)}
-                                _hover={{}}
-                            />
-                        </InputGroup>
+                            Create
+                        </Button>
                     </Flex>
-                    <Button
-                        mr={2}
-                        size="sm"
-                        colorScheme="blue"
-                        fontWeight="md"
-                        leftIcon={<IoTicket />}
-                        onClick={onOpen}
-                        borderLeftRadius="0"
-                    >
-                        Create
-                    </Button>
-                </Flex>
+                ) : (
+                    ""
+                )}
             </Flex>
         </HStack>
     );

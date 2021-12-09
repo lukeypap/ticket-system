@@ -23,8 +23,17 @@ const index = (props: Props) => {
                         width="full"
                         height="full"
                         spacing={4}
-                        overflow="hidden"
                         bg={colorMode === "light" ? "gray.100" : ""}
+                        overflow="auto"
+                        sx={{
+                            "&::-webkit-scrollbar": {
+                                width: "5px",
+                                borderRadius: "8px",
+                            },
+                            "&::-webkit-scrollbar-thumb": {
+                                backgroundColor: "brand.red",
+                            },
+                        }}
                     >
                         <Ticket id={router.query.id} />
                     </VStack>
