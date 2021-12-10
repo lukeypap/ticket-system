@@ -18,6 +18,7 @@ interface Props {
 
 export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModalId }: Props) => {
     const { colorMode, toggleColorMode } = useColorMode();
+    console.log(ticket);
 
     return (
         <Flex

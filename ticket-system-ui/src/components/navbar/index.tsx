@@ -16,6 +16,7 @@ import {
     InputLeftElement,
     Button,
     useColorMode,
+    Skeleton,
 } from "@chakra-ui/react";
 import { useColorModeValue } from "@chakra-ui/system";
 import router, { useRouter } from "next/router";
@@ -23,6 +24,7 @@ import React, { useEffect, useState } from "react";
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
 import { FaBell, FaSearch } from "react-icons/fa";
 import { IoChevronDown } from "react-icons/io5";
+import { useQuery } from "react-query";
 import { getAll } from "../../api/tickets";
 
 interface Props {}
@@ -32,25 +34,14 @@ export const Navbar = (props: Props) => {
     const jwt = {
         token: "",
     };
-    const [currentUser, setCurrentUser] = useState({
-        firstName: "firstName",
-        lastName: "lastName",
-        role: "role",
-    });
     const router = useRouter();
 
-    useEffect(() => {
-        const getTickets = async () => {
+    if (typeof window !== "undefined") {
+        if (localStorage.getItem("token")) {
             jwt.token = localStorage.getItem("token");
-            const data = await getAll(jwt.token);
-            if (data.user) {
-                setCurrentUser(data.user);
-            } else {
-                router.push("/login");
-            }
-        };
-        getTickets();
-    }, []);
+        }
+    }
+    const { data, isLoading, error } = useQuery(["getAll", jwt.token], () => getAll(jwt.token));
 
     return (
         <Flex
@@ -85,10 +76,16 @@ export const Navbar = (props: Props) => {
                     <Menu>
                         <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: "none" }}>
                             <HStack>
-                                <Avatar
-                                    size="sm"
-                                    name={currentUser.firstName + " " + currentUser.lastName}
-                                />
+                                {isLoading ? (
+                                    <Skeleton height="30px" w="30px" borderRadius="full">
+                                        <Avatar />
+                                    </Skeleton>
+                                ) : (
+                                    <Avatar
+                                        size="sm"
+                                        name={data.user.firstName + " " + data.user.lastName}
+                                    />
+                                )}
                                 <VStack
                                     display={{ base: "none", md: "flex" }}
                                     alignItems="flex-start"
@@ -96,12 +93,24 @@ export const Navbar = (props: Props) => {
                                     ml="2"
                                 >
                                     <Text fontSize="sm">
-                                        {currentUser.firstName + " " + currentUser.lastName}
+                                        {isLoading ? (
+                                            <Skeleton height="15px" w="70px">
+                                                <Text>Name</Text>
+                                            </Skeleton>
+                                        ) : (
+                                            data.user.firstName + " " + data.user.lastName
+                                        )}
                                     </Text>
-                                    <Text fontSize="xs" color="gray.600">
-                                        {currentUser.role[0].toUpperCase() +
-                                            currentUser.role.substring(1) || "nothing"}
-                                    </Text>
+                                    {isLoading ? (
+                                        <Skeleton height="15px">
+                                            <Text>Role</Text>
+                                        </Skeleton>
+                                    ) : (
+                                        <Text fontSize="xs" color="gray.600">
+                                            {data.user.role[0].toUpperCase() +
+                                                data.user.role.substring(1)}
+                                        </Text>
+                                    )}
                                 </VStack>
                                 <Box display={{ base: "none", md: "flex" }}>
                                     <IoChevronDown />

@@ -1,100 +1,92 @@
-import { HStack, VStack, Flex, Text, Divider, useDisclosure, Box, Heading } from "@chakra-ui/react";
-import router, { useRouter } from "next/router";
-import { setUncaughtExceptionCaptureCallback } from "process";
+import { VStack, Flex, useDisclosure, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { IoWarning } from "react-icons/io5";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { create, deleteById, getAll, updateStatus } from "../../api/tickets";
 import { PageHeader } from "../header";
 import { ConfirmModal } from "../modal/confirm-modal";
 import { FormModal } from "../modal/form-modal";
-import { Navbar } from "../navbar";
-import { Sidebar } from "../sidebar/index";
-import { MyTable } from "../table";
-import { TicketCard } from "../table/ticket-card";
 import { TicketTable } from "../table/ticket-table";
 
 export const Content = () => {
-    //hacky initial load fix...
-    const [tickets, setTickets] = useState([]);
-    const [filteredTickets, setFilteredTickets] = useState(tickets);
+    const jwt = {
+        token: "",
+    };
+    if (typeof window !== "undefined") {
+        if (localStorage.getItem("token")) {
+            jwt.token = localStorage.getItem("token");
+        }
+    }
+    const { data, isLoading, error } = useQuery(["getAll", jwt.token], () => getAll(jwt.token));
+    const { isLoading: mutationLoading, mutate: createTicket } = useMutation(create, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("getAll");
+        },
+    });
+    const { mutate: deleteTicket } = useMutation(deleteById, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("getAll");
+        },
+    });
+    const { mutate: updateTicketStatus } = useMutation(updateStatus, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("getAll");
+        },
+    });
+
+    const [filteredTickets, setFilteredTickets] = useState([]);
     const [searchTerm, setSearchTerm] = useState();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [modalId, setModalId] = useState();
-    const [lastCreatedTicket, setLastCreatedTicket] = useState();
     const {
         isOpen: isOpenCreateTicketModal,
         onOpen: onOpenCreateTicketModal,
         onClose: onCloseCreateTicketModal,
     } = useDisclosure();
-    const jwt = {
-        token: "",
-    };
-    const [currentUser, setCurrentUser] = useState({ firstName: "" });
-    const router = useRouter();
+    const queryClient = useQueryClient();
 
     useEffect(() => {
-        const getTickets = async () => {
-            jwt.token = localStorage.getItem("token");
-            const data = await getAll(jwt.token);
-            if (data.tickets) {
-                setTickets(data.tickets);
-                setCurrentUser(data.user);
-            } else {
-                router.push("/login");
-            }
-        };
-        getTickets();
-    }, []);
-
-    useEffect(() => {
-        const getTickets = async () => {
-            const data = await getAll(jwt.token);
-            setTickets(data.tickets);
-        };
-        getTickets();
-    }, [lastCreatedTicket]);
-
-    useEffect(() => {
-        const newTickets = tickets.filter(
-            (ticket) =>
-                `${ticket.id}`.includes(searchTerm) ||
-                ticket.title.toLowerCase().includes(searchTerm) ||
-                ticket.user.toLowerCase().includes(searchTerm) ||
-                ticket.status.toLowerCase().includes(searchTerm)
-        );
-        setFilteredTickets(newTickets);
+        if (data) {
+            const newTickets = data.tickets.filter(
+                (ticket) =>
+                    `${ticket.id}`.includes(searchTerm) ||
+                    ticket.title.toLowerCase().includes(searchTerm) ||
+                    ticket.user.toLowerCase().includes(searchTerm) ||
+                    ticket.status.toLowerCase().includes(searchTerm)
+            );
+            setFilteredTickets(newTickets);
+        }
     }, [searchTerm]);
 
     const handleDelete = () => {
-        const ticket = deleteById(modalId);
-        const newTickets = tickets.filter((ticket) => ticket.id !== modalId);
-        setTickets(newTickets);
+        deleteTicket(modalId);
     };
 
     const handleCreate = async (values: Object) => {
-        const ticket = await create(values);
-        const newTickets = tickets;
-        newTickets.unshift(ticket);
-        setTickets(newTickets);
-        setLastCreatedTicket(ticket);
+        createTicket(values);
     };
 
     const handleStatus = async (id: number, status: string) => {
-        const ticket = await updateStatus(id, status);
-        const newTickets = tickets.map((ticket) => {
-            if (ticket.id === id) {
-                ticket.status = status;
-                return ticket;
-            } else {
-                return ticket;
-            }
-        });
-        setTickets(newTickets);
+        updateTicketStatus({ id: id, status: status });
     };
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value.toLocaleLowerCase());
     };
+
+    if (isLoading) {
+        return (
+            <Flex alignItems="center" justifyContent="center" w="full" h="full">
+                <Spinner
+                    thickness="4px"
+                    speed="0.65s"
+                    emptyColor="gray.200"
+                    color="blue.500"
+                    size="xl"
+                />
+            </Flex>
+        );
+    }
 
     return (
         <VStack
@@ -112,21 +104,24 @@ export const Content = () => {
         >
             <PageHeader
                 onOpen={onOpenCreateTicketModal}
-                title={`Welcome ${currentUser.firstName}`}
+                title={`Welcome ${data.user.firstName}`}
                 handleSearchChange={handleSearchChange}
                 addText={"Here's the most recent tickets..."}
                 renderSearchBar={true}
             />
-
-            <TicketTable
-                tickets={tickets}
-                handleDelete={handleDelete}
-                handleStatus={handleStatus}
-                onOpen={onOpen}
-                setModalId={setModalId}
-                searchTerm={searchTerm}
-                filteredTickets={filteredTickets}
-            />
+            {isLoading ? (
+                <p>LOADING...</p>
+            ) : (
+                <TicketTable
+                    tickets={data.tickets}
+                    handleDelete={handleDelete}
+                    handleStatus={handleStatus}
+                    onOpen={onOpen}
+                    setModalId={setModalId}
+                    searchTerm={searchTerm}
+                    filteredTickets={filteredTickets}
+                />
+            )}
 
             <ConfirmModal
                 message="Are you sure you wish to delete this? You can't undo this."

@@ -17,7 +17,7 @@ export async function deleteById(id: number) {
     return ticket;
 }
 
-export async function updateStatus(id: number, status: string) {
+export async function updateStatus({ id, status }) {
     const body = {
         status: status,
     };
