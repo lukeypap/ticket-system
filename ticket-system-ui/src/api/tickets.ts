@@ -1,10 +1,22 @@
+import axios from "axios";
+import { ITicket } from "types/ITicket";
+
 const URL = "http://192.168.1.25:3200/ticket";
 
+// export async function getAll(token) {
+//     const data = await fetch(URL, { headers: { Authorization: `Bearer ${token}` } })
+//         .then((response) => response.json())
+//         .catch((err) => console.log(err));
+//     return data;
+// }
+
 export async function getAll(token) {
-    const data = await fetch(URL, { headers: { Authorization: `Bearer ${token}` } })
-        .then((response) => response.json())
-        .catch((err) => console.log(err));
-    return data;
+    try {
+        const data = await axios.get(URL, { headers: { Authorization: `Bearer ${token}` } });
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 export async function getById(id: number) {

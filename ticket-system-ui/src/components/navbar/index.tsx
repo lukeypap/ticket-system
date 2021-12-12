@@ -41,7 +41,9 @@ export const Navbar = (props: Props) => {
             jwt.token = localStorage.getItem("token");
         }
     }
-    const { data, isLoading, error } = useQuery(["getAll", jwt.token], () => getAll(jwt.token));
+    const { data, isLoading, error, isError } = useQuery(["getAll", jwt.token], () =>
+        getAll(jwt.token)
+    );
 
     return (
         <Flex
@@ -83,7 +85,11 @@ export const Navbar = (props: Props) => {
                                 ) : (
                                     <Avatar
                                         size="sm"
-                                        name={data.user.firstName + " " + data.user.lastName}
+                                        name={
+                                            isError || !data
+                                                ? ""
+                                                : data.user.firstName + " " + data.user.lastName
+                                        }
                                     />
                                 )}
                                 <VStack
@@ -97,6 +103,8 @@ export const Navbar = (props: Props) => {
                                             <Skeleton height="15px" w="70px">
                                                 <Text>Name</Text>
                                             </Skeleton>
+                                        ) : isError || !data ? (
+                                            <p>{error}</p>
                                         ) : (
                                             data.user.firstName + " " + data.user.lastName
                                         )}
@@ -105,6 +113,8 @@ export const Navbar = (props: Props) => {
                                         <Skeleton height="15px">
                                             <Text>Role</Text>
                                         </Skeleton>
+                                    ) : isError || !data ? (
+                                        <p>error</p>
                                     ) : (
                                         <Text fontSize="xs" color="gray.600">
                                             {data.user.role[0].toUpperCase() +

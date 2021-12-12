@@ -1,4 +1,4 @@
-import { VStack, Flex, useDisclosure, Spinner } from "@chakra-ui/react";
+import { VStack, Flex, useDisclosure, Spinner, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { IoWarning } from "react-icons/io5";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -17,7 +17,9 @@ export const Content = () => {
             jwt.token = localStorage.getItem("token");
         }
     }
-    const { data, isLoading, error } = useQuery(["getAll", jwt.token], () => getAll(jwt.token));
+    const { data, isLoading, error, isError } = useQuery(["getAll", jwt.token], () =>
+        getAll(jwt.token)
+    );
     const { isLoading: mutationLoading, mutate: createTicket } = useMutation(create, {
         onSuccess: () => {
             queryClient.invalidateQueries("getAll");
@@ -85,6 +87,14 @@ export const Content = () => {
                     size="xl"
                 />
             </Flex>
+        );
+    }
+
+    if (isError || !data) {
+        return (
+            <Text pt={10} fontWeight="light">
+                An Error occured.
+            </Text>
         );
     }
 
