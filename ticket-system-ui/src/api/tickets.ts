@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ITicket } from "types/ITicket";
 
-const URL = "http://192.168.1.25:3200/ticket";
+const URL = "http://localhost:3200/ticket";
 
 // export async function getAll(token) {
 //     const data = await fetch(URL, { headers: { Authorization: `Bearer ${token}` } })

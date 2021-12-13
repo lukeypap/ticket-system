@@ -45,6 +45,8 @@ export const Navbar = (props: Props) => {
         getAll(jwt.token)
     );
 
+    console.log(data);
+
     return (
         <Flex
             ms={0}
@@ -88,7 +90,9 @@ export const Navbar = (props: Props) => {
                                         name={
                                             isError || !data
                                                 ? ""
-                                                : data.user.firstName + " " + data.user.lastName
+                                                : data.data.user.firstName +
+                                                  " " +
+                                                  data.data.user.lastName
                                         }
                                     />
                                 )}
@@ -106,7 +110,7 @@ export const Navbar = (props: Props) => {
                                         ) : isError || !data ? (
                                             <p>{error}</p>
                                         ) : (
-                                            data.user.firstName + " " + data.user.lastName
+                                            data.data.user.firstName + " " + data.data.user.lastName
                                         )}
                                     </Text>
                                     {isLoading ? (
@@ -117,8 +121,8 @@ export const Navbar = (props: Props) => {
                                         <p>error</p>
                                     ) : (
                                         <Text fontSize="xs" color="gray.600">
-                                            {data.user.role[0].toUpperCase() +
-                                                data.user.role.substring(1)}
+                                            {data.data.user.role[0].toUpperCase() +
+                                                data.data.user.role.substring(1)}
                                         </Text>
                                     )}
                                 </VStack>

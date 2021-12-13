@@ -1,5 +1,5 @@
 export async function login(values: Object) {
-    const token = await fetch("http://192.168.1.25:3200/auth/login", {
+    const token = await fetch("http://localhost:3200/auth/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

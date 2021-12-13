@@ -49,7 +49,7 @@ export const Content = () => {
 
     useEffect(() => {
         if (data) {
-            const newTickets = data.tickets.filter(
+            const newTickets = data.data.tickets.filter(
                 (ticket) =>
                     `${ticket.id}`.includes(searchTerm) ||
                     ticket.title.toLowerCase().includes(searchTerm) ||
@@ -114,7 +114,7 @@ export const Content = () => {
         >
             <PageHeader
                 onOpen={onOpenCreateTicketModal}
-                title={`Welcome ${data.user.firstName}`}
+                title={`Welcome ${data.data.user.firstName}`}
                 handleSearchChange={handleSearchChange}
                 addText={"Here's the most recent tickets..."}
                 renderSearchBar={true}
@@ -123,7 +123,7 @@ export const Content = () => {
                 <p>LOADING...</p>
             ) : (
                 <TicketTable
-                    tickets={data.tickets}
+                    tickets={data.data.tickets}
                     handleDelete={handleDelete}
                     handleStatus={handleStatus}
                     onOpen={onOpen}
