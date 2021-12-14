@@ -11,12 +11,9 @@ const URL = "http://localhost:3200/ticket";
 // }
 
 export async function getAll(token) {
-    try {
-        const data = await axios.get(URL, { headers: { Authorization: `Bearer ${token}` } });
-        return data;
-    } catch (error) {
-        console.log(error);
-    }
+    const data = await axios.get(URL, { headers: { Authorization: `Bearer ${token}` } });
+    if (!data.status) throw new Error(data.statusText);
+    return data;
 }
 
 export async function getById(id: number) {

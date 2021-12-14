@@ -4,6 +4,7 @@ import { GiRayGun } from "react-icons/gi";
 import { Content } from "../src/components/content/home";
 import { Navbar } from "../src/components/navbar";
 import { Sidebar } from "../src/components/sidebar";
+import checkAuth from "../auth/checkAuth";
 
 const IndexPage = () => {
     const { colorMode, toggleColorMode } = useColorMode();
@@ -29,4 +30,4 @@ const IndexPage = () => {
     );
 };
 
-export default IndexPage;
+export default checkAuth(IndexPage);

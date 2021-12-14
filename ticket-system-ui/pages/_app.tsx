@@ -5,6 +5,7 @@ import "../styles.css";
 import "@fontsource/ubuntu";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import checkAuth from "auth/checkAuth";
 
 const queryClient = new QueryClient();
 
