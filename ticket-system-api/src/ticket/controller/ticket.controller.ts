@@ -38,9 +38,11 @@ export class TicketController {
     else if (status === 'closed') return this._ticketService.findClosed();
   }
 
+  @UseGuards(JwtGuard)
   @Post()
-  create(@Body() user: TicketDto): Promise<TicketDto> {
-    return this._ticketService.create(user);
+  create(@Body() ticket: TicketDto, @Req() req: any): Promise<TicketDto> {
+    const user = req.user;
+    return this._ticketService.create(ticket, user);
   }
 
   @UseGuards(JwtGuard)

@@ -1,9 +1,12 @@
+import { UserEntity } from 'src/user/entity/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
   JoinTable,
+  ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -17,9 +20,6 @@ export class TicketEntity {
 
   @Column()
   title: string;
-
-  @Column()
-  user: string;
 
   @Column({ nullable: true })
   message: string;
@@ -47,4 +47,7 @@ export class TicketEntity {
     cascade: true,
   })
   comments: CommentEntity[];
+
+  @ManyToOne(() => UserEntity, (user) => user.tickets)
+  user: UserEntity;
 }

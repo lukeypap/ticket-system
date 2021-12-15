@@ -1,4 +1,5 @@
 import { IsArray, IsOptional, IsString } from 'class-validator';
+import { UserEntity } from 'src/user/entity/user.entity';
 import { CommentEntity } from '../entity/comment.entity';
 
 export class TicketDto {
@@ -12,7 +13,7 @@ export class TicketDto {
 
   @IsString()
   @IsOptional()
-  user: string;
+  user: UserEntity;
 
   @IsString()
   @IsOptional()

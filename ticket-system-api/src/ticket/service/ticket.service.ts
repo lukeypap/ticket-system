@@ -19,7 +19,9 @@ export class TicketService {
     private readonly _userRepo: Repository<UserEntity>,
   ) {}
 
-  async create(ticket: TicketDto): Promise<TicketDto> {
+  async create(ticket: TicketDto, authUser: any): Promise<TicketDto> {
+    const user = await this._userRepo.findOne(authUser.id);
+    ticket.user = user;
     const ticketDto = plainToInstance(
       TicketDto,
       await this._ticketRepo.save(ticket),
@@ -49,7 +51,7 @@ export class TicketService {
         order: {
           createdAt: 'DESC',
         },
-        relations: ['comments', 'comments.user'],
+        relations: ['comments', 'comments.user', 'user'],
       }),
     );
     return ticketDto;

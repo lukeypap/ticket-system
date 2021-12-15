@@ -1,4 +1,5 @@
 import { CommentEntity } from 'src/ticket/entity/comment.entity';
+import { TicketEntity } from 'src/ticket/entity/ticket.entity';
 import {
   Column,
   CreateDateColumn,
@@ -44,4 +45,7 @@ export class UserEntity {
     cascade: true,
   })
   comments: CommentEntity[];
+
+  @OneToMany(() => TicketEntity, (ticket) => ticket.user)
+  tickets: TicketEntity[];
 }
