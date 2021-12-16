@@ -6,6 +6,7 @@ import { Navbar } from "../../src/components/navbar";
 import { Sidebar } from "../../src/components/sidebar";
 import { useRouter } from "next/router";
 import { useColorMode } from "@chakra-ui/color-mode";
+import checkAuth from "auth/checkAuth";
 
 interface Props {}
 
@@ -43,4 +44,4 @@ const index = (props: Props) => {
     );
 };
 
-export default index;
+export default checkAuth(index);

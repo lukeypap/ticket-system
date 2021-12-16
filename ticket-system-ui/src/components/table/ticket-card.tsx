@@ -66,8 +66,8 @@ export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModa
                 <Box w="180px">
                     <VStack w="full" alignItems="start">
                         <HStack pb={1}>
-                            <Avatar name={ticket.user} size="xs" />
-                            <Text>{ticket.user}</Text>
+                            <Avatar name={ticket.user.firstName} size="xs" />
+                            <Text>{ticket.user.firstName + " " + ticket.user.lastName}</Text>
                         </HStack>
                         <Text
                             fontWeight="light"
@@ -78,7 +78,7 @@ export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModa
                             opacity="0.8"
                             style={{ marginTop: "0px" }}
                         >
-                            test@gmail.com
+                            {ticket.user.email}
                         </Text>
                     </VStack>
                 </Box>

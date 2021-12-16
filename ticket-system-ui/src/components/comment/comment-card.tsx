@@ -9,7 +9,7 @@ interface Props {
 
 export const CommentCard = ({ comment }: Props) => {
     return (
-        <Flex boxShadow="md" p={3} bg="white" borderRadius="lg" w="100%">
+        <Flex boxShadow="md" p={3} borderRadius="lg" w="100%">
             <Avatar size="md" name={comment.user.firstName + " " + comment.user.lastName} />
             <Box flex="1" ml={4}>
                 <Flex justifyContent="space-between" h="100%">
@@ -30,11 +30,12 @@ export const CommentCard = ({ comment }: Props) => {
                                 colorScheme="blue"
                                 borderRadius="full"
                                 textTransform="lowercase"
-                                py={1}
+                                mt={2}
+                                py={2}
                                 px={3}
                                 as="div"
                             >
-                                count
+                                reply
                             </Badge>
                         </div>
                     </Flex>

@@ -4,6 +4,7 @@ import { VStack, HStack, useColorMode } from "@chakra-ui/react";
 import Users from "../../src/components/content/users";
 import { Navbar } from "../../src/components/navbar";
 import { Sidebar } from "../../src/components/sidebar";
+import checkAuth from "auth/checkAuth";
 
 interface Props {}
 
@@ -30,4 +31,4 @@ const Index = (props: Props) => {
     );
 };
 
-export default Index;
+export default checkAuth(Index);

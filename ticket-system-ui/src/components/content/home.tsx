@@ -1,4 +1,5 @@
 import { VStack, Flex, useDisclosure, Spinner, Text } from "@chakra-ui/react";
+import { valueScaleCorrection } from "framer-motion/types/render/dom/projection/scale-correction";
 import { useEffect, useState } from "react";
 import { IoWarning } from "react-icons/io5";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -37,7 +38,7 @@ export const Content = () => {
     });
 
     const [filteredTickets, setFilteredTickets] = useState([]);
-    const [searchTerm, setSearchTerm] = useState();
+    const [searchTerm, setSearchTerm] = useState("");
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [modalId, setModalId] = useState();
     const {
@@ -53,7 +54,7 @@ export const Content = () => {
                 (ticket) =>
                     `${ticket.id}`.includes(searchTerm) ||
                     ticket.title.toLowerCase().includes(searchTerm) ||
-                    ticket.user.toLowerCase().includes(searchTerm) ||
+                    ticket.user.firstName.toLowerCase().includes(searchTerm) ||
                     ticket.status.toLowerCase().includes(searchTerm)
             );
             setFilteredTickets(newTickets);
@@ -65,7 +66,7 @@ export const Content = () => {
     };
 
     const handleCreate = async (values: Object) => {
-        createTicket(values);
+        createTicket({ values: values, token: jwt.token });
     };
 
     const handleStatus = async (id: number, status: string) => {

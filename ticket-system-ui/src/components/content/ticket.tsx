@@ -9,6 +9,7 @@ import { chooseLabelColor } from "../../utils/chooseTicketColor";
 import { ErrorBoundary } from "../error-bound/ErrorBoundry";
 import { CommentCard } from "../comment/comment-card";
 import { CommentBox } from "../comment/comment-box";
+import { useQuery } from "@chakra-ui/react";
 interface Props {
     id: any;
 }
@@ -29,6 +30,19 @@ export const Ticket = ({ id }: Props) => {
     const [ticket, setTicket] = useState(initialValues);
     const { colorMode, toggleColorMode } = useColorMode();
     const [comment, setComment] = useState({ message: "" });
+    const jwt = {
+        token: "",
+    };
+    if (typeof window !== "undefined") {
+        if (localStorage.getItem("token")) {
+            jwt.token = localStorage.getItem("token");
+        }
+    }
+
+    const { data, isLoading, error, isError } = useQuery(["getById", id, jwt.token] () => {
+        getById({id: id, token: jwt.token})
+    })
+    );
 
     useEffect(() => {
         const getTicket = async () => {
@@ -36,10 +50,10 @@ export const Ticket = ({ id }: Props) => {
             if (!id) {
                 const windowUrl = window.location.href;
                 const newId = windowUrl.substring(29);
-                setTicket(await getById(parseInt(newId)));
+                setTicket(await getById(parseInt(newId), jwt.token));
                 //http://localhost:3000/ticket/83
             } else {
-                setTicket(await getById(id));
+                setTicket(await getById(id, jwt.token));
             }
         };
         getTicket();
@@ -55,6 +69,8 @@ export const Ticket = ({ id }: Props) => {
         const ticket = await createComment(id, token, comment);
         setTicket(await ticket);
     };
+
+    console.log(ticket);
 
     return (
         <>
@@ -83,7 +99,7 @@ export const Ticket = ({ id }: Props) => {
                     </HStack>
                     <Divider w="94%" />
                     <p>{ticket.message}</p>
-                    <p>{ticket.user}</p>
+                    <p>{ticket.user.firstName}</p>
                     <p>{ticket.createdAt}</p>
                     <p>{ticket.updatedAt}</p>
                     <Divider w="94%" />

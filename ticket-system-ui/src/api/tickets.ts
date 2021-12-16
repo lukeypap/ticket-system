@@ -10,14 +10,16 @@ const URL = "http://localhost:3200/ticket";
 //     return data;
 // }
 
-export async function getAll(token) {
+export async function getAll(token: string) {
     const data = await axios.get(URL, { headers: { Authorization: `Bearer ${token}` } });
     if (!data.status) throw new Error(data.statusText);
     return data;
 }
 
-export async function getById(id: number) {
-    const ticket = await fetch(`${URL}/${id}`).then((res) => res.json());
+export async function getById({ id, token }) {
+    const ticket = await fetch(`${URL}/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+    }).then((res) => res.json());
     return ticket;
 }
 
@@ -40,11 +42,12 @@ export async function updateStatus({ id, status }) {
     return ticket;
 }
 
-export async function create(values: Object) {
+export async function create({ values, token }) {
     const ticket = await fetch(`${URL}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(values),
     }).then((res) => res.json());
