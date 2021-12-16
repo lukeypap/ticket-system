@@ -61,7 +61,7 @@ export class TicketService {
     const ticketDto = plainToInstance(
       TicketDto,
       await this._ticketRepo.findOne(id, {
-        relations: ['comments', 'comments.user'],
+        relations: ['comments', 'comments.user', 'user'],
       }),
     );
     return ticketDto;

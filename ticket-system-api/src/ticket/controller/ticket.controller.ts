@@ -27,9 +27,12 @@ export class TicketController {
     return { tickets, user };
   }
 
+  @UseGuards(JwtGuard)
   @Get(':id')
-  findOne(@Param() id: number): Promise<any> {
-    return this._ticketService.findOne(id);
+  async findOne(@Req() req: any, @Param() id: number): Promise<any> {
+    const ticket = await this._ticketService.findOne(id);
+    const user = req.user;
+    return { ticket, user };
   }
 
   @Get('status/:status')
