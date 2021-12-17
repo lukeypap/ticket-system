@@ -1,76 +1,59 @@
 import React, { useEffect, useState } from "react";
 import { PageHeader } from "../header";
-import { createComment, getById, updateStatus } from "../../api/tickets";
-import { ITicket } from "../../types/ITicket";
+import * as ticketApi from "../../api/tickets";
 import { Box, Divider, Flex, Heading, HStack, VStack } from "@chakra-ui/layout";
 import { useColorMode } from "@chakra-ui/color-mode";
 import { Dropdown } from "../dropdown";
 import { chooseLabelColor } from "../../utils/chooseTicketColor";
-import { ErrorBoundary } from "../error-bound/ErrorBoundry";
 import { CommentCard } from "../comment/comment-card";
 import { CommentBox } from "../comment/comment-box";
-import { useQuery } from "@chakra-ui/react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 interface Props {
     id: any;
 }
 
-const initialValues: ITicket = {
-    id: -1,
-    title: "",
-    user: "",
-    message: "",
-    status: "",
-    isOpen: undefined,
-    createdAt: "",
-    updatedAt: "",
-    comments: [],
-};
-
 export const Ticket = ({ id }: Props) => {
-    const [ticket, setTicket] = useState(initialValues);
+    const queryClient = useQueryClient();
     const { colorMode, toggleColorMode } = useColorMode();
     const [comment, setComment] = useState({ message: "" });
-    const jwt = {
+    const payload = {
+        id: id,
         token: "",
     };
     if (typeof window !== "undefined") {
         if (localStorage.getItem("token")) {
-            jwt.token = localStorage.getItem("token");
+            payload.token = localStorage.getItem("token");
         }
     }
 
-    const { data, isLoading, error, isError } = useQuery(["getById", id, jwt.token] () => {
-        getById({id: id, token: jwt.token})
-    })
+    const { data, isLoading, error, isError } = useQuery(["getById", payload], () =>
+        ticketApi.getById(payload)
     );
 
-    useEffect(() => {
-        const getTicket = async () => {
-            //Hacky fix find work around or better solution to guarantee url
-            if (!id) {
-                const windowUrl = window.location.href;
-                const newId = windowUrl.substring(29);
-                setTicket(await getById(parseInt(newId), jwt.token));
-                //http://localhost:3000/ticket/83
-            } else {
-                setTicket(await getById(id, jwt.token));
-            }
-        };
-        getTicket();
-    }, []);
+    const { mutate: updateTicketStatus } = useMutation(ticketApi.updateStatus, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("getById");
+        },
+    });
+
+    const { mutate: postTicketComment } = useMutation(ticketApi.createComment, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("getById");
+        },
+    });
 
     const handleStatus = async (id: number, status: string) => {
-        const ticket = await updateStatus(id, status);
-        setTicket(await ticket);
+        updateTicketStatus({ id: id, status: status });
     };
 
     const handlePost = async () => {
         const token = localStorage.getItem("token");
-        const ticket = await createComment(id, token, comment);
-        setTicket(await ticket);
+        postTicketComment({ id, token, comment });
     };
 
-    console.log(ticket);
+    if (isLoading) {
+        return <p>Loading...</p>;
+    }
 
     return (
         <>
@@ -88,24 +71,24 @@ export const Ticket = ({ id }: Props) => {
                 >
                     <HStack pt={10} w="full" pl={10} pr={10} pb={5} justifyContent="space-between">
                         <Heading fontSize="2xl" fontWeight="md" opacity="0.8">
-                            {ticket.title}
+                            {data.ticket.title}
                         </Heading>
                         <Dropdown
-                            ticket={ticket}
-                            color={chooseLabelColor(ticket)}
+                            ticket={data.ticket}
+                            color={chooseLabelColor(data.ticket)}
                             handleStatus={handleStatus}
                             size="sm"
                         />
                     </HStack>
                     <Divider w="94%" />
-                    <p>{ticket.message}</p>
-                    <p>{ticket.user.firstName}</p>
-                    <p>{ticket.createdAt}</p>
-                    <p>{ticket.updatedAt}</p>
+                    <p>{data.ticket.message}</p>
+                    <p>{data.ticket.user.firstName}</p>
+                    <p>{data.ticket.createdAt}</p>
+                    <p>{data.ticket.updatedAt}</p>
                     <Divider w="94%" />
                     <VStack w="75%">
-                        {typeof ticket.comments !== "undefined" ? (
-                            ticket.comments.map((comment, idx) => (
+                        {typeof data.ticket.comments !== "undefined" ? (
+                            data.ticket.comments.map((comment, idx) => (
                                 <CommentCard key={comment.id} comment={comment} />
                             ))
                         ) : (

@@ -54,13 +54,7 @@ export async function create({ values, token }) {
     return ticket;
 }
 
-export async function createComment(
-    id: number,
-    token: string,
-    comment: {
-        message: string;
-    }
-) {
+export async function createComment({ id, token, comment }) {
     const ticket = await fetch(`${URL}/${id}/comment`, {
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
         method: "POST",

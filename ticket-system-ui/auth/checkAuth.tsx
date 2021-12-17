@@ -13,13 +13,10 @@ const checkAuth = (WrappedComponent) => {
                 const accessToken = localStorage.getItem("token");
                 // if no accessToken was found,then we redirect to "/" page.
                 if (!accessToken) {
-                    console.log("");
                     Router.replace("/login");
                 } else {
                     // we call the api that verifies the token.
                     const data = await verifyToken(accessToken);
-                    console.log(data);
-                    console.log(accessToken);
                     // if token was verified we set the state.
                     if (data) {
                         setVerified(data);
