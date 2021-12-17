@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { PageHeader } from "../header";
 import * as ticketApi from "../../api/tickets";
-import { Box, Divider, Flex, Heading, HStack, VStack } from "@chakra-ui/layout";
+import { Box, Divider, Flex, Heading, HStack, VStack, Text } from "@chakra-ui/layout";
 import { useColorMode } from "@chakra-ui/color-mode";
 import { Dropdown } from "../dropdown";
 import { chooseLabelColor } from "../../utils/chooseTicketColor";
 import { CommentCard } from "../comment/comment-card";
 import { CommentBox } from "../comment/comment-box";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { Avatar } from "@chakra-ui/react";
 interface Props {
     id: any;
 }
@@ -52,7 +53,7 @@ export const Ticket = ({ id }: Props) => {
     };
 
     if (isLoading) {
-        return <p>Loading...</p>;
+        return <Text>Loading...</Text>;
     }
 
     return (
@@ -66,10 +67,11 @@ export const Ticket = ({ id }: Props) => {
                     bg={colorMode === "light" ? "white" : "gray.700"}
                     borderRadius="lg"
                     boxShadow="md"
-                    my={5}
+                    my={0}
                     margin="auto"
+                    px={10}
                 >
-                    <HStack pt={10} w="full" pl={10} pr={10} pb={5} justifyContent="space-between">
+                    <HStack pt={10} w="full" pb={5} justifyContent="space-between">
                         <Heading fontSize="2xl" fontWeight="md" opacity="0.8">
                             {data.ticket.title}
                         </Heading>
@@ -81,14 +83,50 @@ export const Ticket = ({ id }: Props) => {
                         />
                     </HStack>
                     <Divider w="94%" />
-                    <p>{data.ticket.message}</p>
-                    <p>{data.ticket.user.firstName}</p>
-                    <p>{data.ticket.createdAt}</p>
-                    <p>{data.ticket.updatedAt}</p>
+                    <HStack px={10} py={1} alignItems="top">
+                        <VStack alignItems="left">
+                            <HStack pb={5}>
+                                <Avatar
+                                    size="sm"
+                                    name={
+                                        data.ticket.user.firstName + " " + data.ticket.user.lastName
+                                    }
+                                />
+                                <Text fontWeight="semibold">
+                                    {data.ticket.user.firstName + " " + data.ticket.user.lastName}{" "}
+                                </Text>
+                                <Text>raised this request.</Text>
+                            </HStack>
+                            <Text fontWeight="semibold" fontSize="sm" opacity="0.8">
+                                Description
+                            </Text>
+                            <Text fontSize="sm" fontWeight="light">
+                                {data.ticket.message}
+                            </Text>
+                        </VStack>
+                        <Divider orientation="vertical" />
+                        <VStack>
+                            <HStack>
+                                <Text fontSize="xs">Raised by: </Text>
+                                <Avatar
+                                    size="xs"
+                                    name={
+                                        data.ticket.user.firstName + " " + data.ticket.user.lastName
+                                    }
+                                />
+                                <Text fontSize="xs">
+                                    {data.ticket.user.firstName + " " + data.ticket.user.lastName}
+                                </Text>
+                            </HStack>
+                            <Text>{data.ticket.createdAt}</Text>
+                            <Text>{data.ticket.updatedAt}</Text>
+                            <Text>{data.ticket.priority}</Text>
+                        </VStack>
+                    </HStack>
                     <Divider w="94%" />
                     <VStack w="75%">
                         {typeof data.ticket.comments !== "undefined" ? (
-                            data.ticket.comments.map((comment, idx) => (
+                            data.ticket.comments.map((comment) => (
                                 <CommentCard key={comment.id} comment={comment} />
                             ))
                         ) : (

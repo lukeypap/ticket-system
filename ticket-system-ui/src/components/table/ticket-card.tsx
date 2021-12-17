@@ -18,7 +18,6 @@ interface Props {
 
 export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModalId }: Props) => {
     const { colorMode, toggleColorMode } = useColorMode();
-    console.log(ticket);
 
     return (
         <Flex
@@ -95,9 +94,16 @@ export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModa
                 </Box>
                 <Box>
                     <Flex justifyContent="flex-end" alignItems="center">
-                        <Button size="xs" mx={1} colorScheme="yellow" variant="ghost">
-                            <FaEdit />
-                        </Button>
+                        <Link
+                            href={{
+                                pathname: "/ticket/[id]",
+                                query: { id: ticket.id },
+                            }}
+                        >
+                            <Button size="xs" mx={1} colorScheme="yellow" variant="ghost">
+                                <FaEdit />
+                            </Button>
+                        </Link>
                         <Button
                             size="xs"
                             mx={1}

@@ -121,7 +121,7 @@ export const Content = () => {
                 renderSearchBar={true}
             />
             {isLoading ? (
-                <p>LOADING...</p>
+                <Text>LOADING...</Text>
             ) : (
                 <TicketTable
                     tickets={data.data.tickets}

@@ -34,7 +34,6 @@ export const Navbar = (props: Props) => {
     const jwt = {
         token: "",
     };
-    const router = useRouter();
 
     if (typeof window !== "undefined") {
         if (localStorage.getItem("token")) {
@@ -44,11 +43,6 @@ export const Navbar = (props: Props) => {
     const { data, isLoading, error, isError, status } = useQuery(["getAll", jwt.token], () =>
         getAll(jwt.token)
     );
-
-    if (isError) {
-        return error.message;
-    }
-    console.log(error, status, data);
     return (
         <Flex
             ms={0}
@@ -100,15 +94,17 @@ export const Navbar = (props: Props) => {
                                     spacing="1px"
                                     ml="2"
                                 >
-                                    <Text fontSize="sm">
-                                        {isLoading ? (
-                                            <Skeleton height="15px" w="70px">
-                                                <Text>Name</Text>
-                                            </Skeleton>
-                                        ) : (
-                                            data.data.user.firstName + " " + data.data.user.lastName
-                                        )}
-                                    </Text>
+                                    {isLoading ? (
+                                        <Skeleton height="15px" w="70px">
+                                            <Text>Name</Text>
+                                        </Skeleton>
+                                    ) : (
+                                        <Text>
+                                            {data.data.user.firstName +
+                                                " " +
+                                                data.data.user.lastName}
+                                        </Text>
+                                    )}
                                     {isLoading ? (
                                         <Skeleton height="15px">
                                             <Text>Role</Text>

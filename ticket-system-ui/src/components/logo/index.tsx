@@ -6,7 +6,7 @@ interface Props {}
 export const Logo = (props: Props) => {
     return (
         <Box p={8} pb={4}>
-            <Heading>Tix</Heading>
+            <Heading>Logo</Heading>
         </Box>
     );
 };
