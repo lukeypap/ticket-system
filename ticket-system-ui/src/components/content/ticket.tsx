@@ -9,6 +9,7 @@ import { CommentCard } from "../comment/comment-card";
 import { CommentBox } from "../comment/comment-box";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Avatar } from "@chakra-ui/react";
+import { formatDate } from "src/utils/formatDate";
 interface Props {
     id: any;
 }
@@ -83,9 +84,9 @@ export const Ticket = ({ id }: Props) => {
                         />
                     </HStack>
                     <Divider w="94%" />
-                    <HStack px={10} py={1} alignItems="top">
-                        <VStack alignItems="left">
-                            <HStack pb={5}>
+                    <HStack px={10} py={1} alignItems="top" w="full" h="50%">
+                        <VStack alignItems="left" w="70%">
+                            <HStack pb={5} pt={2}>
                                 <Avatar
                                     size="sm"
                                     name={
@@ -100,31 +101,47 @@ export const Ticket = ({ id }: Props) => {
                             <Text fontWeight="semibold" fontSize="sm" opacity="0.8">
                                 Description
                             </Text>
-                            <Text fontSize="sm" fontWeight="light">
-                                {data.ticket.message}
+                            <Text fontSize="sm" fontWeight="light" pt={2}>
+                                {data.ticket.message
+                                    ? data.ticket.message
+                                    : "There's nothing here..."}
                             </Text>
                         </VStack>
                         <Divider orientation="vertical" />
-                        <VStack>
+                        <VStack w="30%" alignItems="left" fontSize="xs" pl={5} pt={5}>
                             <HStack>
-                                <Text fontSize="xs">Raised by: </Text>
+                                <Text fontWeight="semibold">Raised by: </Text>
                                 <Avatar
                                     size="xs"
                                     name={
                                         data.ticket.user.firstName + " " + data.ticket.user.lastName
                                     }
                                 />
-                                <Text fontSize="xs">
+                                <Text>
                                     {data.ticket.user.firstName + " " + data.ticket.user.lastName}
                                 </Text>
                             </HStack>
-                            <Text>{data.ticket.createdAt}</Text>
-                            <Text>{data.ticket.updatedAt}</Text>
-                            <Text>{data.ticket.priority}</Text>
+                            <HStack>
+                                <Text fontWeight="semibold">Assignee: </Text>
+                                <Avatar size="xs" />
+                                <Text>Unassigned</Text>
+                            </HStack>
+                            <HStack>
+                                <Text fontWeight="semibold">Created: </Text>
+                                <Text>{formatDate(data.ticket.createdAt)}</Text>
+                            </HStack>
+                            <HStack>
+                                <Text fontWeight="semibold">Updated: </Text>
+                                <Text>{formatDate(data.ticket.updatedAt)}</Text>
+                            </HStack>
+                            <HStack>
+                                <Text fontWeight="semibold">Priority: </Text>
+                                <Text>{data.ticket.priority}</Text>
+                            </HStack>
                         </VStack>
                     </HStack>
                     <Divider w="94%" />
-                    <VStack w="75%">
+                    <VStack w="75%" pt={10}>
                         {typeof data.ticket.comments !== "undefined" ? (
                             data.ticket.comments.map((comment) => (
                                 <CommentCard key={comment.id} comment={comment} />

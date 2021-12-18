@@ -3,13 +3,6 @@ import { ITicket } from "types/ITicket";
 
 const URL = "http://localhost:3200/ticket";
 
-// export async function getAll(token) {
-//     const data = await fetch(URL, { headers: { Authorization: `Bearer ${token}` } })
-//         .then((response) => response.json())
-//         .catch((err) => console.log(err));
-//     return data;
-// }
-
 export async function getAll(token: string) {
     const data = await axios.get(URL, { headers: { Authorization: `Bearer ${token}` } });
     if (!data.status) throw new Error(data.statusText);
