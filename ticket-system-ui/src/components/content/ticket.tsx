@@ -101,7 +101,7 @@ export const Ticket = ({ id }: Props) => {
                             <Text fontWeight="semibold" fontSize="sm" opacity="0.8">
                                 Description
                             </Text>
-                            <Text fontSize="sm" fontWeight="light" pt={2}>
+                            <Text fontSize="sm" fontWeight="light" pt={2} opacity="0.8">
                                 {data.ticket.message
                                     ? data.ticket.message
                                     : "There's nothing here..."}
