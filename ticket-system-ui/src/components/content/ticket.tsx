@@ -8,8 +8,10 @@ import { chooseLabelColor } from "../../utils/chooseTicketColor";
 import { CommentCard } from "../comment/comment-card";
 import { CommentBox } from "../comment/comment-box";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { Avatar } from "@chakra-ui/react";
+import { Avatar, Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
 import { formatDate } from "src/utils/formatDate";
+import Link from "next/link";
+import { BsChevronRight } from "react-icons/bs";
 interface Props {
     id: any;
 }
@@ -59,7 +61,30 @@ export const Ticket = ({ id }: Props) => {
 
     return (
         <>
-            <PageHeader title={`Ticket ${id}`} renderSearchBar={false} />
+            <HStack w="full" alignItems="center" spacing={10}>
+                <PageHeader title={`Ticket ${id}`} renderSearchBar={false} />
+
+                <Box fontSize="xs" fontWeight="light" alignContent="left" pt={5} opacity="0.6">
+                    <Breadcrumb separator={<BsChevronRight color="gray.500" />}>
+                        <BreadcrumbItem _hover={{ textDecoration: "underline" }}>
+                            <BreadcrumbLink
+                                href="/"
+                                as={Link}
+                                _hover={{ textDecoration: "underline" }}
+                            >
+                                Home
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+
+                        <BreadcrumbItem _hover={{ textDecoration: "underline" }}>
+                            <BreadcrumbLink
+                                href={`/ticket/${id}`}
+                                as={Link}
+                            >{`Ticket ${id}`}</BreadcrumbLink>
+                        </BreadcrumbItem>
+                    </Breadcrumb>
+                </Box>
+            </HStack>
             <Box w="full" h="full">
                 <VStack
                     w="90%"
@@ -108,37 +133,44 @@ export const Ticket = ({ id }: Props) => {
                             </Text>
                         </VStack>
                         <Divider orientation="vertical" />
-                        <VStack w="30%" alignItems="left" fontSize="xs" pl={5} pt={5}>
-                            <HStack>
-                                <Text fontWeight="semibold">Raised by: </Text>
-                                <Avatar
-                                    size="xs"
-                                    name={
-                                        data.ticket.user.firstName + " " + data.ticket.user.lastName
-                                    }
-                                />
-                                <Text>
-                                    {data.ticket.user.firstName + " " + data.ticket.user.lastName}
+                        <HStack alignItems="top" w="30%" fontSize="xs" pl={3} pt={3}>
+                            <VStack fontWeight="semibold" spacing={3}>
+                                <Text pb={1} pt={1}>
+                                    Raised By:
                                 </Text>
-                            </HStack>
-                            <HStack>
-                                <Text fontWeight="semibold">Assignee: </Text>
-                                <Avatar size="xs" />
-                                <Text>Unassigned</Text>
-                            </HStack>
-                            <HStack>
-                                <Text fontWeight="semibold">Created: </Text>
+                                <Text pb={1}>Asignee:</Text>
+                                <Text>Created:</Text>
+                                <Text>Updated:</Text>
+                                <Text>Priority:</Text>
+                            </VStack>
+                            <VStack alignItems="right" pl={3} spacing={3}>
+                                <HStack>
+                                    <Avatar
+                                        size="xs"
+                                        name={
+                                            data.ticket.user.firstName +
+                                            " " +
+                                            data.ticket.user.lastName
+                                        }
+                                    />
+                                    <Text>
+                                        {data.ticket.user.firstName +
+                                            " " +
+                                            data.ticket.user.lastName}
+                                    </Text>
+                                </HStack>
+                                <HStack>
+                                    <Avatar size="xs" />
+                                    <Text>Unassigned</Text>
+                                </HStack>
                                 <Text>{formatDate(data.ticket.createdAt)}</Text>
-                            </HStack>
-                            <HStack>
-                                <Text fontWeight="semibold">Updated: </Text>
                                 <Text>{formatDate(data.ticket.updatedAt)}</Text>
-                            </HStack>
-                            <HStack>
-                                <Text fontWeight="semibold">Priority: </Text>
-                                <Text>{data.ticket.priority}</Text>
-                            </HStack>
-                        </VStack>
+                                <Text>
+                                    {data.ticket.priority[0].toUpperCase() +
+                                        data.ticket.priority.substring(1)}
+                                </Text>
+                            </VStack>
+                        </HStack>
                     </HStack>
                     <Divider w="94%" />
                     <VStack w="75%" pt={10}>

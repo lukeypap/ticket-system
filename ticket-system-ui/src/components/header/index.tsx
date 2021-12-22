@@ -23,7 +23,7 @@ export const PageHeader = ({
 }: Props) => {
     const { colorMode, toggleColorMode } = useColorMode();
     return (
-        <HStack width="full" pl={10} pr={10} pt={5}>
+        <HStack width="full" pl={10} pt={5}>
             <Flex justifyContent="space-between" alignItems="center" flex={1}>
                 <Flex>
                     <VStack>
