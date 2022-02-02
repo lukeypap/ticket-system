@@ -42,7 +42,7 @@ export const PageHeader = ({
                     </VStack>
                 </Flex>
                 {renderSearchBar ? (
-                    <Flex>
+                    <Flex pr={4}>
                         <Flex>
                             <InputGroup
                                 size="sm"
