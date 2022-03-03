@@ -5,7 +5,6 @@ import { FaEdit, FaKey, FaPlus, FaTrash } from "react-icons/fa";
 export const ActionBar = () => {
     return (
         <HStack
-            fontWeight="semibold"
             opacity="0.8"
             alignItems="start"
             w="94%"
