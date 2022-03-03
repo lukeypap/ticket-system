@@ -59,6 +59,7 @@ export class TicketController {
     return this._ticketService.createComment(comment, id, user);
   }
 
+  @UseGuards(JwtGuard)
   @Patch(':id')
   update(
     @Param() id: number,
@@ -67,6 +68,7 @@ export class TicketController {
     return this._ticketService.update(id, ticket);
   }
 
+  @UseGuards(JwtGuard)
   @Delete(':id')
   delete(@Param() id: number): Promise<TicketDto> {
     return this._ticketService.delete(id);

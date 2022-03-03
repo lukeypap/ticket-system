@@ -1,15 +1,14 @@
 import {
   Body,
-  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
   Param,
   Patch,
   Post,
-  Put,
-  UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { UserUpdateDto } from '../dto/user-update.dto';
 import { UserDto } from '../dto/user.dto';
 import { UserService } from '../service/user.service';
@@ -19,6 +18,7 @@ import { UserService } from '../service/user.service';
 export class UserController {
   constructor(private readonly _userService: UserService) {}
 
+  @UseGuards(JwtGuard)
   @Get()
   async findAll(): Promise<UserDto[]> {
     return await this._userService.findAll();
