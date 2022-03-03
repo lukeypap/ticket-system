@@ -62,7 +62,7 @@ export const Content = () => {
     }, [searchTerm]);
 
     const handleDelete = () => {
-        deleteTicket(modalId);
+        deleteTicket({ id: modalId, token: jwt.token });
     };
 
     const handleCreate = async (values: Object) => {
@@ -70,7 +70,7 @@ export const Content = () => {
     };
 
     const handleStatus = async (id: number, status: string) => {
-        updateTicketStatus({ id: id, status: status });
+        updateTicketStatus({ id: id, status: status, token: jwt.token });
     };
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {

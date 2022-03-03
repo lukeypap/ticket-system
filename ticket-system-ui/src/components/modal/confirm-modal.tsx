@@ -10,6 +10,7 @@ import {
     VStack,
     Text,
     Icon,
+    useToast,
 } from "@chakra-ui/react";
 import React, { ReactElement } from "react";
 import { IoIosWarning } from "react-icons/io";
@@ -24,6 +25,8 @@ interface Props {
 }
 
 export const ConfirmModal = ({ message, title, onSubmit, isOpen, onClose, icon }: Props) => {
+    const toast = useToast();
+
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
@@ -45,6 +48,12 @@ export const ConfirmModal = ({ message, title, onSubmit, isOpen, onClose, icon }
                         onClick={() => {
                             onSubmit();
                             onClose();
+                            toast({
+                                title: "Ticket Deleted.",
+                                status: "error",
+                                duration: 9000,
+                                isClosable: true,
+                            });
                         }}
                     >
                         Delete

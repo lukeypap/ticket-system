@@ -16,12 +16,15 @@ export async function getById({ id, token }) {
     return ticket;
 }
 
-export async function deleteById(id: number) {
-    const ticket = await fetch(`${URL}/${id}`, { method: "DELETE" }).then((res) => res.json());
+export async function deleteById({ id, token }) {
+    const ticket = await fetch(`${URL}/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+    }).then((res) => res.json());
     return ticket;
 }
 
-export async function updateStatus({ id, status }) {
+export async function updateStatus({ id, status, token }) {
     const body = {
         status: status,
     };
@@ -29,6 +32,7 @@ export async function updateStatus({ id, status }) {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(body),
     }).then((res) => res.json());

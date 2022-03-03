@@ -12,6 +12,7 @@ import {
     Button,
     Textarea,
     Select,
+    useToast,
 } from "@chakra-ui/react";
 import React, { ReactElement, useRef, useState } from "react";
 
@@ -43,6 +44,8 @@ export const FormModal = ({ message, title, handleCreate, isOpen, onClose, icon 
         });
     };
 
+    const toast = useToast();
+
     const initialRef = useRef();
     return (
         <Modal
@@ -63,16 +66,6 @@ export const FormModal = ({ message, title, handleCreate, isOpen, onClose, icon 
                             value={values.title}
                             ref={initialRef}
                             placeholder="Title of your issue."
-                            onChange={handleInputChange}
-                        />
-                    </FormControl>
-
-                    <FormControl mt={4}>
-                        <FormLabel>User</FormLabel>
-                        <Input
-                            name="user"
-                            value={values.user}
-                            placeholder="Your name."
                             onChange={handleInputChange}
                         />
                     </FormControl>
@@ -111,6 +104,12 @@ export const FormModal = ({ message, title, handleCreate, isOpen, onClose, icon 
                             handleCreate(values);
                             onClose();
                             setValues(initialValues);
+                            toast({
+                                title: "Ticket Created",
+                                status: "success",
+                                duration: 9000,
+                                isClosable: true,
+                            });
                         }}
                     >
                         Submit
