@@ -62,10 +62,13 @@ export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModa
                         {ticket.message ? ticket.message : "Empty description..."}
                     </Text>
                 </Box>
-                <Box w="180px">
+                <Box w="170px">
                     <VStack w="full" alignItems="start">
                         <HStack pb={1}>
-                            <Avatar name={ticket.user.firstName} size="xs" />
+                            <Avatar
+                                name={ticket.user.firstName + " " + ticket.user.lastName}
+                                size="xs"
+                            />
                             <Text>{ticket.user.firstName + " " + ticket.user.lastName}</Text>
                         </HStack>
                         <Text
@@ -79,6 +82,18 @@ export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModa
                         >
                             {ticket.user.email}
                         </Text>
+                    </VStack>
+                </Box>
+                <Box w="100px">
+                    <VStack w="full" alignItems="start">
+                        <HStack w="full" pb={1}>
+                            <Avatar name="" size="xs" />
+                            <Box w="full" overflow="hidden">
+                                <Text textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
+                                    Unassigned
+                                </Text>
+                            </Box>
+                        </HStack>
                     </VStack>
                 </Box>
                 <Box w="150px">
