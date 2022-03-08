@@ -8,7 +8,6 @@ interface Props {
 }
 
 export const UserTable = ({ users }: Props) => {
-    console.log(users);
     return (
         <VStack pb={2} w="full" px={10}>
             <HStack
