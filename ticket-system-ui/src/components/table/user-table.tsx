@@ -1,7 +1,14 @@
 import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 import React from "react";
+import { IUser } from "types/IUser";
+import { UserCard } from "./user-card";
 
-export const UserTable = () => {
+interface Props {
+    users: IUser[];
+}
+
+export const UserTable = ({ users }: Props) => {
+    console.log(users);
     return (
         <VStack pb={2} w="full" px={10}>
             <HStack
@@ -36,6 +43,12 @@ export const UserTable = () => {
                     <Text>CREATED</Text>
                 </Box>
             </HStack>
+
+            {users ? (
+                users.map((user, id) => <UserCard user={user} />)
+            ) : (
+                <p>There's nothing here!</p>
+            )}
         </VStack>
     );
 };

@@ -1,4 +1,12 @@
-import { Flex, Input, InputGroup, InputLeftElement, useColorMode, VStack } from "@chakra-ui/react";
+import {
+    Flex,
+    Input,
+    InputGroup,
+    InputLeftElement,
+    Text,
+    useColorMode,
+    VStack,
+} from "@chakra-ui/react";
 import { ActionBar } from "components/actionbar";
 import UserHeader from "components/header/user-header";
 import { UserTable } from "components/table/user-table";
@@ -62,7 +70,7 @@ const Users = (props: Props) => {
                     </InputGroup>
                 </Flex>
             </Flex>
-            <UserTable />
+            {isLoading ? <Text>LOADING...</Text> : <UserTable users={data.data} />}
         </VStack>
     );
 };
