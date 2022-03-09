@@ -2,7 +2,7 @@ import { Box, Button, HStack, Text } from "@chakra-ui/react";
 import { BiBlock } from "react-icons/bi";
 import { FaEdit, FaKey, FaPlus, FaTrash } from "react-icons/fa";
 
-export const ActionBar = () => {
+export const ActionBar = ({ handleDraw }) => {
     return (
         <HStack
             opacity="0.8"
@@ -21,6 +21,7 @@ export const ActionBar = () => {
                     borderRadius="0"
                     _focus={{ border: "none" }}
                     style={{ margin: 0 }}
+                    onClick={handleDraw}
                 >
                     <FaPlus />
                     <Text ml={1}>New User</Text>

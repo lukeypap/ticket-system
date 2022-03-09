@@ -8,3 +8,15 @@ export async function getAll(token: string) {
     console.log(data);
     return data;
 }
+
+export async function create({ values, token }) {
+    const user = await fetch(URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(values),
+    }).then((res) => res.json());
+    return user;
+}
