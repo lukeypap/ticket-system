@@ -1,21 +1,27 @@
 import { Avatar, Box, Checkbox, Flex, HStack, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import { formatDate } from "src/utils/formatDate";
 import { IUser } from "types/IUser";
-import { useCheckbox } from "@chakra-ui/react";
-
 interface Props {
     user: IUser;
+    handleChange: any;
+    checked: boolean;
+    setChecked: any;
 }
 
-export const UserCard = ({ user }: Props) => {
-    const { state, getCheckboxProps, getInputProps, getLabelProps, htmlProps } = useCheckbox();
-    console.log(state);
+export const UserCard = ({ user, handleChange, checked, setChecked }: Props) => {
     return (
-        <Flex w="full" opacity="0.8" borderBottom="1px" borderBottomColor="gray" pb={1}>
+        <Flex
+            w="full"
+            opacity="0.8"
+            borderBottom="1px"
+            borderBottomColor="gray"
+            pb={1}
+            fontSize="sm"
+        >
             <HStack>
                 <Box pr={3}>
-                    <Checkbox pt={1} />
+                    <Checkbox onChange={() => handleChange(user.id, checked, setChecked)} pt={1} />
                 </Box>
                 <Box w="205px" overflow="hidden" whiteSpace="nowrap">
                     <HStack>

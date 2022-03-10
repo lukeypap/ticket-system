@@ -5,9 +5,12 @@ import { UserCard } from "./user-card";
 
 interface Props {
     users: IUser[];
+    handleChange: any;
+    checked: boolean;
+    setChecked: any;
 }
 
-export const UserTable = ({ users }: Props) => {
+export const UserTable = ({ users, handleChange, checked, setChecked }: Props) => {
     return (
         <VStack pb={2} w="full" px={10}>
             <HStack
@@ -44,7 +47,14 @@ export const UserTable = ({ users }: Props) => {
             </HStack>
 
             {users ? (
-                users.map((user, id) => <UserCard user={user} />)
+                users.map((user, id) => (
+                    <UserCard
+                        user={user}
+                        handleChange={handleChange}
+                        checked={checked}
+                        setChecked={setChecked}
+                    />
+                ))
             ) : (
                 <p>There's nothing here!</p>
             )}

@@ -20,3 +20,11 @@ export async function create({ values, token }) {
     }).then((res) => res.json());
     return user;
 }
+
+export async function deleteById({ id, token }) {
+    const user = await fetch(`${URL}/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+    }).then((res) => res.json());
+    return user;
+}

@@ -23,15 +23,18 @@ import { ActionBar } from "components/actionbar";
 import UserHeader from "components/header/user-header";
 import { UserDraw } from "components/modal/create-user-draw";
 import { UserTable } from "components/table/user-table";
+import { id } from "date-fns/locale";
 import { createSecureServer } from "http2";
-import React from "react";
+import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useQueryClient, useMutation, useQuery } from "react-query";
-import { create, getAll } from "src/api/users";
+import { create, deleteById, getAll } from "src/api/users";
 
 interface Props {}
 
 const Users = (props: Props) => {
+    const [checkedItems, setCheckedItems] = useState([]);
+    const [checked, setChecked] = useState(false);
     const { colorMode, toggleColorMode } = useColorMode();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const queryClient = useQueryClient();
@@ -50,7 +53,13 @@ const Users = (props: Props) => {
 
     const { isLoading: mutationLoading, mutate: createUser } = useMutation(create, {
         onSuccess: () => {
-            queryClient.invalidateQueries("getAll");
+            queryClient.invalidateQueries("getAllUsers");
+        },
+    });
+
+    const { mutate: deleteUser } = useMutation(deleteById, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("getAllUsers");
         },
     });
 
@@ -60,6 +69,29 @@ const Users = (props: Props) => {
 
     const handleCreateAccountDrawer = () => {
         onOpen();
+    };
+
+    const handleCheckBoxChange = (id) => {
+        setChecked(!checked);
+        let chkditems = checkedItems;
+        if (!checked) {
+            chkditems.push(id);
+            setCheckedItems(chkditems);
+        } else {
+            chkditems = chkditems.filter((value) => value !== id);
+            setCheckedItems(chkditems);
+        }
+    };
+
+    const handleDelete = () => {
+        if (checkedItems.length !== 0) {
+            const idx = checkedItems[0];
+            console.log(idx);
+            setCheckedItems([]);
+            deleteUser({ id: idx, token: jwt.token });
+        } else {
+            console.log("nothing to delete");
+        }
     };
 
     return (
@@ -78,7 +110,7 @@ const Users = (props: Props) => {
             pl={10}
         >
             <UserHeader addText="All users" title="Users" />
-            <ActionBar handleDraw={handleCreateAccountDrawer} />
+            <ActionBar handleDraw={handleCreateAccountDrawer} handleDelete={handleDelete} />
             <UserDraw onClose={onClose} isOpen={isOpen} size="sm" handleCreate={handleCreate} />
             <Flex w="full" pt={4}>
                 <Flex w="32%" pl={10}>
@@ -101,7 +133,16 @@ const Users = (props: Props) => {
                     </InputGroup>
                 </Flex>
             </Flex>
-            {isLoading ? <Text>LOADING...</Text> : <UserTable users={data.data} />}
+            {isLoading ? (
+                <Text>LOADING...</Text>
+            ) : (
+                <UserTable
+                    users={data.data}
+                    handleChange={handleCheckBoxChange}
+                    checked={checked}
+                    setChecked={setChecked}
+                />
+            )}
         </VStack>
     );
 };
