@@ -1,4 +1,4 @@
-import { Avatar, Box, Checkbox, Flex, HStack, Text } from "@chakra-ui/react";
+import { Avatar, Box, Checkbox, Flex, HStack, Text, useColorMode } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { formatDate } from "src/utils/formatDate";
 import { IUser } from "types/IUser";
@@ -10,6 +10,8 @@ interface Props {
 }
 
 export const UserCard = ({ user, handleChange, checked, setChecked }: Props) => {
+    const { colorMode, toggleColorMode } = useColorMode();
+
     return (
         <Flex
             w="full"
@@ -18,8 +20,11 @@ export const UserCard = ({ user, handleChange, checked, setChecked }: Props) => 
             borderBottomColor="gray"
             pb={1}
             fontSize="sm"
+            bg={colorMode === "light" ? "gray.50" : "gray.700"}
+            style={{ marginTop: "0px" }}
+            pt={1}
         >
-            <HStack>
+            <HStack pl={2}>
                 <Box pr={3}>
                     <Checkbox onChange={() => handleChange(user.id, checked, setChecked)} pt={1} />
                 </Box>
