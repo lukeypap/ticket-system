@@ -1,5 +1,3 @@
-import axios from "axios";
-
 export async function login(values: Object) {
     const token = await fetch("http://localhost:3200/auth/login", {
         method: "POST",
@@ -12,11 +10,11 @@ export async function login(values: Object) {
 }
 
 export async function verifyToken(token: string) {
-    const res = await axios.get("http://localhost:3200/ticket", {
+    const res = await fetch("http://localhost:3200/ticket", {
         headers: { Authorization: `Bearer ${token}` },
-    });
+    }).then((res) => res.json());
     console.log(res);
-    if (!res.data.user) {
+    if (res.statusCode === 401) {
         return false;
     }
     return true;

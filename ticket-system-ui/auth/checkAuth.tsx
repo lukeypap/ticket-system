@@ -16,13 +16,13 @@ const checkAuth = (WrappedComponent) => {
                     Router.replace("/login");
                 } else {
                     // we call the api that verifies the token.
-                    const data = await verifyToken(accessToken);
+                    let data = await verifyToken(accessToken);
                     // if token was verified we set the state.
                     if (data) {
                         setVerified(data);
                     } else {
                         // If the token was fraud we first remove it from localStorage and then redirect to "/"
-                        localStorage.removeItem("accessToken");
+                        localStorage.removeItem("token");
                         Router.replace("/login");
                     }
                 }
