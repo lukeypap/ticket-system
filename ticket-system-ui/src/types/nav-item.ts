@@ -4,7 +4,7 @@ type HeaderItem = {
     type: "header";
 };
 
-type LinkItem = {
+export type LinkItem = {
     type: "link";
     icon: IconType;
     href: string;

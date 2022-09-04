@@ -3,25 +3,29 @@ import { Heading, Icon, Text, HStack, Box, Link } from "@chakra-ui/react";
 
 import { NavItem as Item } from "../../types/nav-item";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 type Props = {
     item: Item;
-    isActive: boolean;
 };
 
-export const NavItem = ({ isActive: IsActive, item }: Props) => {
+export const NavItem = ({ item }: Props) => {
     const { label } = item;
+    const router = useRouter();
+    const [active, setActive] = useState(
+        item.type === "link" ? (router.pathname === item.href ? true : false) : false
+    );
     const handleLogout = () => {
         if (label === "Log Out") {
             console.log("removing item");
             localStorage.removeItem("token");
         }
-        console.log("hello");
     };
 
     if (item.type === "link") {
         const { icon } = item;
-        const [active, setActive] = useState(IsActive);
+        if (router.pathname === item.href) {
+        }
 
         return (
             <NextLink href={item.href} passHref>

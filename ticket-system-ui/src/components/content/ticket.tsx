@@ -47,7 +47,7 @@ export const Ticket = ({ id }: Props) => {
     });
 
     const handleStatus = async (id: number, status: string) => {
-        updateTicketStatus({ id: id, status: status });
+        updateTicketStatus({ id: id, status: status, token: payload.token });
     };
 
     const handlePost = async () => {

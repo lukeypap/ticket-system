@@ -9,7 +9,6 @@ export const ActionBar = ({ handleDraw, handleDelete }) => {
             alignItems="start"
             w="94%"
             mt={5}
-            //borderRadius={7}
             borderBottom="1px"
             borderBottomColor="gray"
             p={2}
@@ -24,7 +23,9 @@ export const ActionBar = ({ handleDraw, handleDelete }) => {
                     onClick={handleDraw}
                 >
                     <FaPlus />
-                    <Text ml={1}>New User</Text>
+                    <Text ml={1} fontWeight="light">
+                        New User
+                    </Text>
                 </Button>
             </HStack>
             <HStack>
@@ -37,7 +38,9 @@ export const ActionBar = ({ handleDraw, handleDelete }) => {
                     onClick={handleDelete}
                 >
                     <FaTrash />
-                    <Text ml={1}>Delete</Text>
+                    <Text ml={1} fontWeight="light">
+                        Delete
+                    </Text>
                 </Button>
             </HStack>
             <Box>
@@ -49,7 +52,9 @@ export const ActionBar = ({ handleDraw, handleDelete }) => {
                     _focus={{ border: "none" }}
                 >
                     <FaEdit />
-                    <Text ml={1}>Edit</Text>
+                    <Text ml={1} fontWeight="light">
+                        Edit
+                    </Text>
                 </Button>
             </Box>
             <Box>
@@ -61,7 +66,9 @@ export const ActionBar = ({ handleDraw, handleDelete }) => {
                     _focus={{ border: "none" }}
                 >
                     <FaKey />
-                    <Text ml={1}>Reset Password</Text>
+                    <Text ml={1} fontWeight="light">
+                        Reset Password
+                    </Text>
                 </Button>
             </Box>
             <Box>
@@ -73,7 +80,9 @@ export const ActionBar = ({ handleDraw, handleDelete }) => {
                     _focus={{ border: "none" }}
                 >
                     <BiBlock />
-                    <Text ml={1}>Block User</Text>
+                    <Text ml={1} fontWeight="light">
+                        Block User
+                    </Text>
                 </Button>
             </Box>
         </HStack>

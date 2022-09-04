@@ -15,12 +15,6 @@ export const navItems: NavItem[] = [
     },
     {
         type: "link",
-        href: "/search",
-        icon: RiSearchLine,
-        label: "Search",
-    },
-    {
-        type: "link",
         href: "/users",
         icon: FaUserAlt,
         label: "Users",
@@ -31,31 +25,31 @@ export const navItems: NavItem[] = [
     },
     {
         type: "link",
-        href: "/local",
+        href: "",
         icon: IoTicketSharp,
         label: "Open",
     },
     {
         type: "link",
-        href: "/local",
+        href: "",
         icon: IoTicketSharp,
         label: "Closed",
     },
     {
         type: "link",
-        href: "/local",
+        href: "",
         icon: IoTicketSharp,
         label: "Work in progress",
     },
     {
         type: "link",
-        href: "/recent",
+        href: "",
         icon: GiBackwardTime,
         label: "Recent",
     },
     {
         type: "link",
-        href: "/favorites",
+        href: "",
         icon: FaHeart,
         label: "Favorites",
     },
@@ -65,7 +59,7 @@ export const navItems: NavItem[] = [
     },
     {
         type: "link",
-        href: "/settings",
+        href: "",
         icon: IoIosSettings,
         label: "Settings",
     },

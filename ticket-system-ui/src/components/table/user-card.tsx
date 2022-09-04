@@ -1,4 +1,4 @@
-import { Avatar, Box, Checkbox, Flex, HStack, Text, useColorMode } from "@chakra-ui/react";
+import { Avatar, Box, Checkbox, Flex, HStack, Td, Text, Tr, useColorMode } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { formatDate } from "src/utils/formatDate";
 import { IUser } from "types/IUser";
@@ -13,42 +13,34 @@ export const UserCard = ({ user, handleChange, checked, setChecked }: Props) => 
     const { colorMode, toggleColorMode } = useColorMode();
 
     return (
-        <Flex
-            w="full"
-            opacity="0.8"
-            borderBottom="1px"
-            borderBottomColor="gray"
-            pb={1}
-            fontSize="sm"
-            bg={colorMode === "light" ? "gray.50" : "gray.700"}
-            style={{ marginTop: "0px" }}
-            pt={1}
-        >
-            <HStack pl={2}>
-                <Box pr={3}>
-                    <Checkbox onChange={() => handleChange(user.id, checked, setChecked)} pt={1} />
-                </Box>
-                <Box w="205px" overflow="hidden" whiteSpace="nowrap">
-                    <HStack>
-                        <Avatar name={user.firstName + " " + user.lastName} size="xs" />
-                        <Text textOverflow="ellipsis" overflow="hidden">
-                            {user.firstName + " " + user.lastName}
-                        </Text>
-                    </HStack>
-                </Box>
-                <Box w="190px">
-                    <Text>{user.email}</Text>
-                </Box>
-                <Box w="108px">
-                    <Text>{user.role[0].toUpperCase() + user.role.slice(1)}</Text>
-                </Box>
-                <Box w="158px">
-                    <Text>{user.department ? user.department : "No Department..."}</Text>
-                </Box>
-                <Box>
-                    <Text>{formatDate(user.createdAt)}</Text>
-                </Box>
-            </HStack>
-        </Flex>
+        <tr>
+            <td>
+                <Checkbox
+                    onChange={() => handleChange(user.id, checked, setChecked)}
+                    pt={1}
+                    pl={1}
+                />
+            </td>
+            <td>
+                <HStack mb="5px">
+                    <Avatar name={user.firstName + " " + user.lastName} size="xs" />
+                    <Text textOverflow="ellipsis" overflow="hidden">
+                        {user.firstName + " " + user.lastName}
+                    </Text>
+                </HStack>
+            </td>
+            <td>
+                <Text>{user.email}</Text>
+            </td>
+            <td>
+                <Text>{user.role[0].toUpperCase() + user.role.slice(1)}</Text>
+            </td>
+            <td>
+                <Text>{user.department ? user.department : "No Department..."}</Text>
+            </td>
+            <td>
+                <Text>{formatDate(user.createdAt)}</Text>
+            </td>
+        </tr>
     );
 };

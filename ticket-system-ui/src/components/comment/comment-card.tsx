@@ -25,19 +25,6 @@ export const CommentCard = ({ comment }: Props) => {
                         <Text fontSize="sm" fontWeight="light">
                             {formatDate(comment.createdAt)}
                         </Text>
-                        <div>
-                            <Badge
-                                colorScheme="blue"
-                                borderRadius="full"
-                                textTransform="lowercase"
-                                mt={2}
-                                py={2}
-                                px={3}
-                                as="div"
-                            >
-                                reply
-                            </Badge>
-                        </div>
                     </Flex>
                 </Flex>
             </Box>

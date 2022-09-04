@@ -1,4 +1,17 @@
-import { Box, HStack, Text, VStack } from "@chakra-ui/react";
+import {
+    Box,
+    HStack,
+    Table,
+    TableContainer,
+    Tbody,
+    Td,
+    Text,
+    Tfoot,
+    Th,
+    Thead,
+    Tr,
+    VStack,
+} from "@chakra-ui/react";
 import React from "react";
 import { IUser } from "types/IUser";
 import { UserCard } from "./user-card";
@@ -13,7 +26,36 @@ interface Props {
 export const UserTable = ({ users, handleChange, checked, setChecked }: Props) => {
     return (
         <>
-            <VStack pb={2} w="full" px={10}>
+            <TableContainer w="75vw">
+                <Table size="xl" mt="20px">
+                    <Thead>
+                        <Tr>
+                            <Th> </Th>
+                            <Th>NAME</Th>
+                            <Th>EMAIL</Th>
+                            <Th>TYPE</Th>
+                            <Th>DEPARTMENT</Th>
+                            <Th>CREATED</Th>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        {users ? (
+                            users.map((user, id) => (
+                                <UserCard
+                                    user={user}
+                                    handleChange={handleChange}
+                                    checked={checked}
+                                    setChecked={setChecked}
+                                    key={id}
+                                />
+                            ))
+                        ) : (
+                            <p>There's nothing here!</p>
+                        )}
+                    </Tbody>
+                </Table>
+            </TableContainer>
+            {/* <VStack pb={2} w="full" px={10}>
                 <HStack
                     mt={0}
                     spacing={{ base: 4, "2xl": 12 }}
@@ -60,7 +102,7 @@ export const UserTable = ({ users, handleChange, checked, setChecked }: Props) =
                 ) : (
                     <p>There's nothing here!</p>
                 )}
-            </VStack>
+            </VStack> */}
         </>
     );
 };

@@ -1,31 +1,19 @@
 import {
-    Button,
-    Drawer,
-    DrawerBody,
-    DrawerContent,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerOverlay,
     Flex,
-    FormControl,
-    FormLabel,
     Input,
     InputGroup,
     InputLeftElement,
-    Select,
     Text,
-    Textarea,
     useColorMode,
     useDisclosure,
+    useToast,
     VStack,
 } from "@chakra-ui/react";
 import { ActionBar } from "components/actionbar";
 import UserHeader from "components/header/user-header";
 import { UserDraw } from "components/modal/create-user-draw";
 import { UserTable } from "components/table/user-table";
-import { id } from "date-fns/locale";
-import { createSecureServer } from "http2";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useQueryClient, useMutation, useQuery } from "react-query";
 import { create, deleteById, getAll } from "src/api/users";
@@ -37,6 +25,7 @@ const Users = (props: Props) => {
     const [checked, setChecked] = useState(false);
     const { colorMode, toggleColorMode } = useColorMode();
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const toast = useToast();
     const queryClient = useQueryClient();
     const jwt = {
         token: "",
@@ -83,12 +72,18 @@ const Users = (props: Props) => {
         }
     };
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         if (checkedItems.length !== 0) {
             const idx = checkedItems[0];
             console.log(idx);
             setCheckedItems([]);
             deleteUser({ id: idx, token: jwt.token });
+            toast({
+                title: "User Deleted",
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+            });
         } else {
             console.log("nothing to delete");
         }
