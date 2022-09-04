@@ -17,6 +17,10 @@ export class TicketDto {
 
   @IsString()
   @IsOptional()
+  asignee: UserEntity;
+
+  @IsString()
+  @IsOptional()
   status: string;
 
   @IsString()

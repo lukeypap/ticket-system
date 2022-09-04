@@ -51,7 +51,7 @@ export class TicketService {
         order: {
           createdAt: 'DESC',
         },
-        relations: ['comments', 'comments.user', 'user'],
+        relations: ['comments', 'comments.user', 'user', 'asignee'],
       }),
     );
     return ticketDto;
@@ -61,7 +61,7 @@ export class TicketService {
     const ticketDto = plainToInstance(
       TicketDto,
       await this._ticketRepo.findOne(id, {
-        relations: ['comments', 'comments.user', 'user'],
+        relations: ['comments', 'comments.user', 'user', 'asignee'],
       }),
     );
     return ticketDto;

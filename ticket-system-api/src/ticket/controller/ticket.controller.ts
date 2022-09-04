@@ -16,10 +16,10 @@ import { UpdateTicketDto } from '../dto/update-ticket.dto';
 import { TicketService } from '../service/ticket.service';
 
 @Controller('ticket')
+@UseGuards(JwtGuard)
 export class TicketController {
   constructor(private readonly _ticketService: TicketService) {}
 
-  @UseGuards(JwtGuard)
   @Get()
   async findAll(@Req() req: any): Promise<any> {
     const tickets = await this._ticketService.findAll();
@@ -27,7 +27,6 @@ export class TicketController {
     return { tickets, user };
   }
 
-  @UseGuards(JwtGuard)
   @Get(':id')
   async findOne(@Req() req: any, @Param() id: number): Promise<any> {
     const ticket = await this._ticketService.findOne(id);
@@ -41,14 +40,12 @@ export class TicketController {
     else if (status === 'closed') return this._ticketService.findClosed();
   }
 
-  @UseGuards(JwtGuard)
   @Post()
   create(@Body() ticket: TicketDto, @Req() req: any): Promise<TicketDto> {
     const user = req.user;
     return this._ticketService.create(ticket, user);
   }
 
-  @UseGuards(JwtGuard)
   @Post(':id/comment')
   createComment(
     @Body() comment: CommentDto,
@@ -59,7 +56,6 @@ export class TicketController {
     return this._ticketService.createComment(comment, id, user);
   }
 
-  @UseGuards(JwtGuard)
   @Patch(':id')
   update(
     @Param() id: number,
@@ -68,7 +64,6 @@ export class TicketController {
     return this._ticketService.update(id, ticket);
   }
 
-  @UseGuards(JwtGuard)
   @Delete(':id')
   delete(@Param() id: number): Promise<TicketDto> {
     return this._ticketService.delete(id);

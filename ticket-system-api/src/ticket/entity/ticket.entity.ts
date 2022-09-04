@@ -50,4 +50,7 @@ export class TicketEntity {
 
   @ManyToOne(() => UserEntity, (user) => user.tickets)
   user: UserEntity;
+
+  @ManyToOne(() => UserEntity, (user) => user.tickets)
+  asignee: UserEntity;
 }

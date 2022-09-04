@@ -1,3 +1,5 @@
+import { RolesGuard } from './../../auth/guards/roles.guard';
+import { Role } from './../entity/role.enum';
 import {
   Body,
   Controller,
@@ -8,6 +10,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { Roles } from 'src/auth/decorators/roles.decorator';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { UserUpdateDto } from '../dto/user-update.dto';
 import { UserDto } from '../dto/user.dto';
@@ -15,10 +18,11 @@ import { UserService } from '../service/user.service';
 
 @Controller('user')
 //@UseInterceptors(ClassSerializerInterceptor)
+@Roles(Role.ADMIN)
+@UseGuards(JwtGuard, RolesGuard)
 export class UserController {
   constructor(private readonly _userService: UserService) {}
 
-  @UseGuards(JwtGuard)
   @Get()
   async findAll(): Promise<UserDto[]> {
     return await this._userService.findAll();
