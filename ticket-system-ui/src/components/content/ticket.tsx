@@ -170,8 +170,8 @@ export const Ticket = ({ id }: Props) => {
                                 </VStack>
                                 <Divider orientation="vertical" />
                                 <HStack alignItems="top" w="35%" fontSize="xs" pl={3} pt={3}>
-                                    <VStack fontWeight="semibold" spacing={3}>
-                                        <Text pb={1} pt={1}>
+                                    <VStack fontWeight="semibold" spacing={5}>
+                                        <Text pb={3} pt={1}>
                                             Raised By:
                                         </Text>
                                         <Text pb={1}>Asignee:</Text>
@@ -179,7 +179,7 @@ export const Ticket = ({ id }: Props) => {
                                         <Text>Updated:</Text>
                                         <Text>Priority:</Text>
                                     </VStack>
-                                    <VStack alignItems="right" pl={3} spacing={3}>
+                                    <VStack alignItems="right" pl={3} spacing={5}>
                                         <HStack>
                                             <Avatar
                                                 size="xs"

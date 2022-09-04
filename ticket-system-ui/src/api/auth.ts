@@ -13,7 +13,6 @@ export async function verifyToken(token: string) {
     const res = await fetch("http://localhost:3200/ticket", {
         headers: { Authorization: `Bearer ${token}` },
     }).then((res) => res.json());
-    console.log(res);
     if (res.statusCode === 401) {
         return false;
     }

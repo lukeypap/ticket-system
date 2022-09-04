@@ -37,14 +37,13 @@ const AssigneeDropdown = ({ ticket, users, token }: props) => {
 
     return (
         <Menu>
-            <MenuButton as={Button} size={"xs"} fontWeight={"md"} p="10px">
+            <MenuButton as={Button} size={"sm"} fontWeight={"md"}>
                 <HStack>
                     <Avatar
-                        p={"10px"}
                         size="xs"
                         name={
                             activeAsignee === "Unassigned"
-                                ? ""
+                                ? "Unassigned"
                                 : activeAsignee.firstName + " " + activeAsignee.lastName
                         }
                     />
