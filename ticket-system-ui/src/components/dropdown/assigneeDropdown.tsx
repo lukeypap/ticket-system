@@ -37,7 +37,7 @@ const AssigneeDropdown = ({ ticket, users, token }: props) => {
 
     return (
         <Menu>
-            <MenuButton as={Button} size={"sm"} fontWeight={"md"}>
+            <MenuButton as={Button} variant="outline" size={"sm"} fontWeight={"md"}>
                 <HStack>
                     <Avatar
                         size="xs"
@@ -54,7 +54,10 @@ const AssigneeDropdown = ({ ticket, users, token }: props) => {
                     </Text>
                 </HStack>
             </MenuButton>
-            <MenuList>
+            <MenuList
+                style={{ overflowY: "scroll", overflow: "-moz-scrollbars-vertical" }}
+                h="210px"
+            >
                 {users.map((user) => (
                     <MenuItem
                         key={user.id}
