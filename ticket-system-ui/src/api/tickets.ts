@@ -59,3 +59,17 @@ export async function createComment({ id, token, comment }) {
     }).then((res) => res.json());
     return ticket;
 }
+
+export async function updateAsignee({ id, token, userId }) {
+    const body = {
+        asignee: {
+            id: userId,
+        },
+    };
+    const ticket = await fetch(`${URL}/${id}`, {
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        method: "PATCH",
+        body: JSON.stringify(body),
+    }).then((res) => res.json());
+    return ticket;
+}

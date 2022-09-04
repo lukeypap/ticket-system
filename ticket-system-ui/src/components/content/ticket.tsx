@@ -8,11 +8,26 @@ import { chooseLabelColor } from "../../utils/chooseTicketColor";
 import { CommentCard } from "../comment/comment-card";
 import { CommentBox } from "../comment/comment-box";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { Avatar, Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
+import {
+    Avatar,
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    Button,
+    Input,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+} from "@chakra-ui/react";
 import { formatDate } from "src/utils/formatDate";
 import Link from "next/link";
 import { BsChevronRight } from "react-icons/bs";
 import { useRouter } from "next/router";
+import { IoChevronDownCircleOutline } from "react-icons/io5";
+import { BiChevronDown } from "react-icons/bi";
+import AssigneeDropdown from "components/dropdown/assigneeDropdown";
+import { getAll } from "src/api/users";
 interface Props {
     id: any;
 }
@@ -37,6 +52,13 @@ export const Ticket = ({ id }: Props) => {
     const { data, isLoading, error, isError } = useQuery(["getById", payload], () =>
         ticketApi.getById(payload)
     );
+
+    const {
+        data: userData,
+        isLoading: userIsLoading,
+        error: userError,
+        isError: userIsError,
+    } = useQuery(["getAllUsers", payload.token], () => getAll(payload.token));
 
     const { mutate: updateTicketStatus } = useMutation(ticketApi.updateStatus, {
         onSuccess: () => {
@@ -147,7 +169,7 @@ export const Ticket = ({ id }: Props) => {
                                     </Text>
                                 </VStack>
                                 <Divider orientation="vertical" />
-                                <HStack alignItems="top" w="30%" fontSize="xs" pl={3} pt={3}>
+                                <HStack alignItems="top" w="35%" fontSize="xs" pl={3} pt={3}>
                                     <VStack fontWeight="semibold" spacing={3}>
                                         <Text pb={1} pt={1}>
                                             Raised By:
@@ -173,25 +195,11 @@ export const Ticket = ({ id }: Props) => {
                                                     data.ticket.user.lastName}
                                             </Text>
                                         </HStack>
-                                        <HStack>
-                                            <Avatar
-                                                size="xs"
-                                                name={
-                                                    data.ticket.asignee !== null
-                                                        ? data.ticket.asignee.firstName +
-                                                          " " +
-                                                          data.ticket.asignee.lastName
-                                                        : ""
-                                                }
-                                            />
-                                            <Text>
-                                                {data.ticket.asignee !== null
-                                                    ? data.ticket.asignee.firstName +
-                                                      " " +
-                                                      data.ticket.asignee.lastName
-                                                    : "Unassigned"}
-                                            </Text>
-                                        </HStack>
+                                        <AssigneeDropdown
+                                            ticket={data.ticket}
+                                            users={userData.data}
+                                            token={payload.token}
+                                        />
                                         <Text>{formatDate(data.ticket.createdAt)}</Text>
                                         <Text>{formatDate(data.ticket.updatedAt)}</Text>
                                         <Text>
