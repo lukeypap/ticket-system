@@ -3,6 +3,7 @@ import {
     Input,
     InputGroup,
     InputLeftElement,
+    Spinner,
     Text,
     useColorMode,
     useDisclosure,
@@ -92,6 +93,7 @@ const Users = (props: Props) => {
     return (
         <VStack
             width="full"
+            h="full"
             overflow="auto"
             sx={{
                 "&::-webkit-scrollbar": {
@@ -104,39 +106,56 @@ const Users = (props: Props) => {
             }}
             pl={10}
         >
-            <UserHeader addText="All users" title="Users" />
-            <ActionBar handleDraw={handleCreateAccountDrawer} handleDelete={handleDelete} />
-            <UserDraw onClose={onClose} isOpen={isOpen} size="sm" handleCreate={handleCreate} />
-            <Flex w="full" pt={4}>
-                <Flex w="32%" pl={10}>
-                    <InputGroup
-                        size="sm"
-                        borderColor={colorMode === "light" ? "blue.500" : "blue.200"}
-                    >
-                        <InputLeftElement
-                            pointerEvents="none"
-                            color="gray.400"
-                            children={<FaSearch />}
-                        />
-                        <Input
-                            borderRightRadius="0"
-                            border="2px"
-                            variant="outline"
-                            placeholder="Table search..."
-                            _hover={{}}
-                        />
-                    </InputGroup>
-                </Flex>
-            </Flex>
             {isLoading ? (
-                <Text>LOADING...</Text>
+                <Flex justifyContent={"center"} alignItems={"center"} h="50%">
+                    <Spinner size="lg" />
+                </Flex>
+            ) : isError ? (
+                error.response.status === 403 ? (
+                    <Flex justifyContent={"center"} alignItems={"center"} h="50%">
+                        <Text>You don't have permission to view this page.</Text>
+                    </Flex>
+                ) : (
+                    <Text>Error</Text>
+                )
             ) : (
-                <UserTable
-                    users={data.data}
-                    handleChange={handleCheckBoxChange}
-                    checked={checked}
-                    setChecked={setChecked}
-                />
+                <>
+                    <UserHeader addText="All users" title="Users" />
+                    <ActionBar handleDraw={handleCreateAccountDrawer} handleDelete={handleDelete} />
+                    <UserDraw
+                        onClose={onClose}
+                        isOpen={isOpen}
+                        size="sm"
+                        handleCreate={handleCreate}
+                    />
+                    <Flex w="full" pt={4}>
+                        <Flex w="32%" pl={10}>
+                            <InputGroup
+                                size="sm"
+                                borderColor={colorMode === "light" ? "blue.500" : "blue.200"}
+                            >
+                                <InputLeftElement
+                                    pointerEvents="none"
+                                    color="gray.400"
+                                    children={<FaSearch />}
+                                />
+                                <Input
+                                    borderRightRadius="0"
+                                    border="2px"
+                                    variant="outline"
+                                    placeholder="Table search..."
+                                    _hover={{}}
+                                />
+                            </InputGroup>
+                        </Flex>
+                    </Flex>
+                    <UserTable
+                        users={data.data}
+                        handleChange={handleCheckBoxChange}
+                        checked={checked}
+                        setChecked={setChecked}
+                    />
+                </>
             )}
         </VStack>
     );

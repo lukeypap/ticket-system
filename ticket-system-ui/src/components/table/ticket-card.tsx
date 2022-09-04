@@ -87,10 +87,19 @@ export const TicketCard = ({ ticket, handleStatus, handleDelete, onOpen, setModa
                 <Box w="100px">
                     <VStack w="full" alignItems="start">
                         <HStack w="full" pb={1}>
-                            <Avatar name="" size="xs" />
+                            <Avatar
+                                name={
+                                    ticket.asignee !== null
+                                        ? ticket.asignee.firstName + " " + ticket.asignee.lastName
+                                        : ""
+                                }
+                                size="xs"
+                            />
                             <Box w="full" overflow="hidden">
                                 <Text textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
-                                    Unassigned
+                                    {ticket.asignee !== null
+                                        ? ticket.asignee.firstName + " " + ticket.asignee.lastName
+                                        : "Unassigned"}
                                 </Text>
                             </Box>
                         </HStack>

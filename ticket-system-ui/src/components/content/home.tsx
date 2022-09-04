@@ -113,25 +113,31 @@ export const Content = () => {
                 },
             }}
         >
-            <PageHeader
-                onOpen={onOpenCreateTicketModal}
-                title={`Welcome ${data.data.user.firstName}`}
-                handleSearchChange={handleSearchChange}
-                addText={"Here's the most recent tickets..."}
-                renderSearchBar={true}
-            />
             {isLoading ? (
-                <Text>LOADING...</Text>
+                <Flex justifyContent={"center"} alignItems={"center"} h="50%">
+                    <Spinner size="lg" />
+                </Flex>
+            ) : isError ? (
+                <Text>Error</Text>
             ) : (
-                <TicketTable
-                    tickets={data.data.tickets}
-                    handleDelete={handleDelete}
-                    handleStatus={handleStatus}
-                    onOpen={onOpen}
-                    setModalId={setModalId}
-                    searchTerm={searchTerm}
-                    filteredTickets={filteredTickets}
-                />
+                <>
+                    <PageHeader
+                        onOpen={onOpenCreateTicketModal}
+                        title={`Welcome ${data.data.user.firstName}`}
+                        handleSearchChange={handleSearchChange}
+                        addText={"Here's the most recent tickets..."}
+                        renderSearchBar={true}
+                    />
+                    <TicketTable
+                        tickets={data.data.tickets}
+                        handleDelete={handleDelete}
+                        handleStatus={handleStatus}
+                        onOpen={onOpen}
+                        setModalId={setModalId}
+                        searchTerm={searchTerm}
+                        filteredTickets={filteredTickets}
+                    />
+                </>
             )}
 
             <ConfirmModal

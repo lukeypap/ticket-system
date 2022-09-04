@@ -14,12 +14,6 @@ export const navItems: NavItem[] = [
         label: "Home",
     },
     {
-        type: "link",
-        href: "/users",
-        icon: FaUserAlt,
-        label: "Users",
-    },
-    {
         type: "header",
         label: "Queues",
     },
@@ -59,9 +53,9 @@ export const navItems: NavItem[] = [
     },
     {
         type: "link",
-        href: "",
-        icon: IoIosSettings,
-        label: "Settings",
+        href: "/users",
+        icon: FaUserAlt,
+        label: "Admin",
     },
     {
         type: "link",

@@ -33,7 +33,7 @@ export const NavItem = ({ item }: Props) => {
                     <HStack
                         align="center"
                         justify="flex-start"
-                        height={{ base: 10, "2xl": 14 }}
+                        height={{ base: 10 }}
                         transition="ease-out"
                         transitionProperty="background"
                         transitionDuration="normal"
