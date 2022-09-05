@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = "https://ticket-system-production.up.railway.app/user";
+const URL = `${process.env.API_URL}/user`;
 
 export async function getAll(token: string) {
     const data = await axios.get(URL, { headers: { Authorization: `Bearer ${token}` } });
