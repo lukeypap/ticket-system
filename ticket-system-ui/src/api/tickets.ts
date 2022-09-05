@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ITicket } from "types/ITicket";
 
-const URL = "http://localhost:3200/ticket";
+const URL = "https://ticket-system-production.up.railway.app/ticket";
 
 export async function getAll(token: string) {
     const data = await axios.get(URL, { headers: { Authorization: `Bearer ${token}` } });
