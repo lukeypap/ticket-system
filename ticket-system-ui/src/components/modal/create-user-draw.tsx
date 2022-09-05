@@ -15,7 +15,7 @@ import {
 import React, { useRef, useState } from "react";
 
 const initialValues = {
-    firstName: "test",
+    firstName: "",
     lastName: "",
     email: "",
     password: "",
@@ -122,7 +122,6 @@ export const UserDraw = ({ onClose, isOpen, size, handleCreate }) => {
                         colorScheme="blue"
                         onClick={() => {
                             handleCreate(values);
-                            console.log(values);
                             onClose();
                             setValues(initialValues);
                             toast({

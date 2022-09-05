@@ -98,16 +98,33 @@ export const LoginCard = () => {
                                 <Checkbox>Remember me</Checkbox>
                                 <Link color={"blue.400"}>Forgot password?</Link>
                             </Stack>
-                            <Button
-                                bg={"blue.400"}
-                                color={"white"}
-                                _hover={{
-                                    bg: "blue.500",
-                                }}
-                                onClick={() => handleLogin(values)}
-                            >
-                                Sign in
-                            </Button>
+                            <Stack>
+                                <Button
+                                    bg={"blue.400"}
+                                    color={"white"}
+                                    _hover={{
+                                        bg: "blue.500",
+                                    }}
+                                    onClick={() => handleLogin(values)}
+                                >
+                                    Sign in
+                                </Button>
+                                <Button
+                                    bg={"blue.400"}
+                                    color={"white"}
+                                    _hover={{
+                                        bg: "blue.500",
+                                    }}
+                                    onClick={() =>
+                                        handleLogin({
+                                            email: "demouser@demo.com",
+                                            password: "demouser123",
+                                        })
+                                    }
+                                >
+                                    Demo Login
+                                </Button>
+                            </Stack>
                         </Stack>
                     </Stack>
                 </Box>

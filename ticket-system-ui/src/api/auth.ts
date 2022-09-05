@@ -11,6 +11,18 @@ export async function login(values: Object) {
     return token;
 }
 
+export async function register(values: Object) {
+    console.log(JSON.stringify(values));
+    const user = await fetch(`${URL}/auth/register`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+    }).then((res) => res.json());
+    return user;
+}
+
 export async function verifyToken(token: string) {
     const res = await fetch(`${URL}/ticket`, {
         headers: { Authorization: `Bearer ${token}` },

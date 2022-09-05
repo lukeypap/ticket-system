@@ -17,6 +17,7 @@ import { UserTable } from "components/table/user-table";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useQueryClient, useMutation, useQuery } from "react-query";
+import { register } from "src/api/auth";
 import { create, deleteById, getAll } from "src/api/users";
 import { ITicket } from "types/ITicket";
 
@@ -48,7 +49,7 @@ const Users = (props: Props) => {
         () => getAll(jwt.token)
     );
 
-    const { isLoading: mutationLoading, mutate: createUser } = useMutation(create, {
+    const { isLoading: mutationLoading, mutate: createUser } = useMutation(register, {
         onSuccess: () => {
             queryClient.invalidateQueries("getAllUsers");
         },
@@ -61,7 +62,7 @@ const Users = (props: Props) => {
     });
 
     const handleCreate = async (values: Object) => {
-        createUser({ values: values, token: jwt.token });
+        createUser(values);
     };
 
     const handleCreateAccountDrawer = () => {
