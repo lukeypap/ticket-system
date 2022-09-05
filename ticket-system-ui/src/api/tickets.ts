@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ITicket } from "types/ITicket";
 
-const URL = `${process.env.API_URL}/ticket`;
+const URL = `${process.env.NEXT_PUBLIC_API_URL}/ticket`;
 
 export async function getAll(token: string) {
     const data = await axios.get(URL, { headers: { Authorization: `Bearer ${token}` } });

@@ -1,5 +1,7 @@
+const URL = process.env.NEXT_PUBLIC_API_URL;
+
 export async function login(values: Object) {
-    const token = await fetch(`${process.env.API_URL}/auth/login`, {
+    const token = await fetch(`${URL}/auth/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -10,7 +12,7 @@ export async function login(values: Object) {
 }
 
 export async function verifyToken(token: string) {
-    const res = await fetch(`${process.env.API_URL}/ticket`, {
+    const res = await fetch(`${URL}/ticket`, {
         headers: { Authorization: `Bearer ${token}` },
     }).then((res) => res.json());
     if (res.statusCode === 401) {
