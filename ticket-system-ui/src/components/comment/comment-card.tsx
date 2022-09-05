@@ -1,10 +1,11 @@
 import { Flex, Box, Badge, Text } from "@chakra-ui/layout";
 import { Avatar } from "@chakra-ui/react";
 import React from "react";
+import { IUser } from "types/IUser";
 import { formatDate } from "../../utils/formatDate";
 
 interface Props {
-    comment: { id: number; message: string; createdAt: string };
+    comment: { id: number; message: string; createdAt: string; user: IUser };
 }
 
 export const CommentCard = ({ comment }: Props) => {

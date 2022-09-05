@@ -18,8 +18,14 @@ import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useQueryClient, useMutation, useQuery } from "react-query";
 import { create, deleteById, getAll } from "src/api/users";
+import { ITicket } from "types/ITicket";
 
 interface Props {}
+
+interface Error {
+    response?: any;
+    code?: number;
+}
 
 const Users = (props: Props) => {
     const [checkedItems, setCheckedItems] = useState([]);
@@ -37,8 +43,9 @@ const Users = (props: Props) => {
         }
     }
 
-    const { data, isLoading, error, isError } = useQuery(["getAllUsers", jwt.token], () =>
-        getAll(jwt.token)
+    const { data, isLoading, error, isError } = useQuery<any, Error>(
+        ["getAllUsers", jwt.token],
+        () => getAll(jwt.token)
     );
 
     const { isLoading: mutationLoading, mutate: createUser } = useMutation(create, {
