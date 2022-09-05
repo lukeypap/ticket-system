@@ -14,6 +14,12 @@ export const navItems: NavItem[] = [
         label: "Home",
     },
     {
+        type: "link",
+        href: "",
+        icon: IoTicketSharp,
+        label: "Create a ticket",
+    },
+    {
         type: "header",
         label: "Queues",
     },

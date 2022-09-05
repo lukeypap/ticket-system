@@ -7,9 +7,10 @@ import { useRouter } from "next/router";
 
 type Props = {
     item: Item;
+    onOpen: any;
 };
 
-export const NavItem = ({ item }: Props) => {
+export const NavItem = ({ item, onOpen }: Props) => {
     const { label } = item;
     const router = useRouter();
     const [active, setActive] = useState(
@@ -22,14 +23,27 @@ export const NavItem = ({ item }: Props) => {
         }
     };
 
+    const handleTicket = () => {
+        if (label === "Create a ticket") {
+            onOpen();
+        }
+    };
+
     if (item.type === "link") {
         const { icon } = item;
         if (router.pathname === item.href) {
         }
 
         return (
-            <NextLink href={item.href} passHref>
-                <Link variant="unstyled" _hover={{ textDecoration: "none" }} onClick={handleLogout}>
+            <NextLink href={item.label !== "Create a ticket" ? item.href : ""} passHref>
+                <Link
+                    _hover={{ textDecoration: "none" }}
+                    onClick={() => {
+                        handleLogout();
+                        handleTicket();
+                    }}
+                    _focus={{ outline: "none" }}
+                >
                     <HStack
                         align="center"
                         justify="flex-start"
@@ -38,13 +52,8 @@ export const NavItem = ({ item }: Props) => {
                         transitionProperty="background"
                         transitionDuration="normal"
                         _hover={active ? { color: "" } : { color: "brand.red" }}
-                        borderRight={active ? "4px" : "0px"}
-                        borderRightColor={active ? "brand.red" : ""}
                         bg={active ? "brand.red" : ""}
-                        borderRadius={active ? "xl" : "none"}
-                        //bg={isActive ? "brand.red" : ""}
                         color={active ? "white" : ""}
-                        onClick={() => setActive(true)}
                     >
                         <Icon width={5} height={5} mr={4} ml={5} as={icon} opacity="0.8" />
                         <Text
